@@ -18,7 +18,7 @@ import { formatCurrency } from "../../../../../api/util";
 const Filters = () => {
   const [range, setRange] = useState([2500, 8000]);
   return (
-    <div className="hidden md:block w-[35%] p-5 pl-[2rem] sticky top-[1px]">
+    <div className="hidden md:block w-[35%] p-5 pl-[2rem]">
       <div className="relative w-full mb-[1rem]">
         <Search className="absolute left-3 top-1/2 h-4 w-4 text-muted-foreground -translate-y-1/2 pointer-events-none" />
         <Input 
