@@ -6,15 +6,15 @@ import LoginPage from "./LoginPage";
 const Routes = () => {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/easyvent-platform/",
       element: <LandingPage />,
     },
     {
-      path: "/search",
+      path: "/easyvent-platform/search",
       element: <SearchPage />
     },
     {
-      path: "/login",
+      path: "/easyvent-platform/login",
       element: <LoginPage />
     }
   ]);
