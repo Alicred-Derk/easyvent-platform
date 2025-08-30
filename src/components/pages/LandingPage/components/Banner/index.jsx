@@ -13,7 +13,7 @@ const Banner = () => {
   const navigate = useNavigate();
 
   const navigateSearchPage = () => {
-    navigate("/search");
+    navigate("/easyvent-platform/search");
   }
 
   return (

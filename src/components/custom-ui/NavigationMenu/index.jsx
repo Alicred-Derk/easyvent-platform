@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const NavigationMenu = () => {
   const navigate = useNavigate();
 
-  const navigateLogin = () => navigate("/login");
+  const navigateLogin = () => navigate("/easyvent-platform/login");
   
   return (
     <div className="w-[100%] flex h-[3.8rem] shadow-2xs bg-white justify-between items-center-safe px-8 sticky z-[10] top-[0px]">
