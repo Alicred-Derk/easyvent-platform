@@ -1,0 +1,90 @@
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Search } from "lucide-react";
+
+import RangeSlider from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useState } from "react";
+import { formatCurrency } from "../../../../../api/util";
+
+const Filters = () => {
+  const [range, setRange] = useState([2500, 8000]);
+  return (
+    <div className="hidden md:block w-[35%] p-5 pl-[2rem] sticky top-[1px]">
+      <div className="relative w-full mb-[1rem]">
+        <Search className="absolute left-3 top-1/2 h-4 w-4 text-muted-foreground -translate-y-1/2 pointer-events-none" />
+        <Input 
+          type="search" 
+          placeholder="Search event by name"
+          className="pl-10 pr-3 w-full h-8"
+          onChange={(evt) => setNameFilter(evt.target.value)}
+        />
+      </div>
+
+      <Card className="rounded-md py-4 gap-4">
+        <CardHeader className="border-b-1 px-4 pb-2">
+          <CardTitle>Filters</CardTitle>
+        </CardHeader>
+
+        <CardContent className="px-4">
+          <Label className="font-bold text-[1rem] text-[#183B4E]">Budget Range</Label>
+          <div className="py-5">
+            <RangeSlider
+              min={1000}
+              max={10000}
+              step={1}
+              value={range}
+              onValueChange={setRange}
+              formatLabel={(v) => formatCurrency(v)}
+              className="w-full"
+            />
+          </div>
+
+          
+          <Label className="font-bold text-[1rem] mt-5 mb-4 text-[#183B4E]">Payment Options</Label>
+
+          <div className="flex gap-3 items-center mb-4">
+            <Checkbox /> <Label>Free Cancellation</Label>
+          </div>
+          <div className="flex gap-3 items-center mb-4">
+            <Checkbox /> <Label>Book Now, Pay Later</Label>
+          </div>
+
+          <Label className="font-bold text-[1rem] mt-5 mb-4 text-[#183B4E]">Property Type</Label>
+
+          <div className="flex gap-3 items-center mb-4">
+            <Checkbox /> <Label>Restaurant</Label>
+          </div>
+          <div className="flex gap-3 items-center mb-4">
+            <Checkbox /> <Label>Resort & Spa</Label>
+          </div>
+          <div className="flex gap-3 items-center mb-4">
+            <Checkbox /> <Label>Hotel with Function Hall</Label>
+          </div>
+          <div className="flex gap-3 items-center mb-4">
+            <Checkbox /> <Label>Hotel with Pool & Function Hall</Label>
+          </div>
+          <div className="flex gap-3 items-center mb-4">
+            <Checkbox /> <Label>Events Rental House with Pool</Label>
+          </div>
+
+          <Label className="font-bold text-[1rem] mt-5 mb-4 text-[#183B4E]">Property Facilities</Label>
+
+          <div className="flex gap-3 items-center mb-4">
+            <Checkbox /> <Label>No Corkage Fee</Label>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default Filters;
