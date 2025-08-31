@@ -16,6 +16,7 @@ import Res4 from "@/assets/images/res_4.jpg";
 import Res5 from "@/assets/images/res_5.jpg";
 import { Banknote, ChevronsUpDown } from "lucide-react";
 import Filters from "./components/Filters";
+import SearchSection from "./components/SearchSection";
 
 const hotels = [
   {
@@ -70,6 +71,8 @@ const SearchPage = () => {
   return (
     <div className="w-[100vw] h-[100vh] overflow-y-auto overflow-x-hidden relative">
       <NavigationMenu />
+      
+      <SearchSection />
       <div className="flex gap-[2rem] px-2 md:px-[10rem]">
         <EventCards list={[...hotels, ...restaurants]} />
 

@@ -23,3 +23,7 @@ body {
 .font-poppins {
   font-family: "Poppins", serif;
 }
+
+.no-icon::-webkit-calendar-picker-indicator {
+  display: none;
+}
