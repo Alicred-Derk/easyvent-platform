@@ -29,7 +29,7 @@ const Filters = ({ setSearchState }) => {
         <Search className="absolute left-3 top-1/2 h-4 w-4 text-muted-foreground -translate-y-1/2 pointer-events-none" />
         <Input 
           type="search" 
-          placeholder="Search event by name"
+          placeholder="Search place by name"
           className="pl-10 pr-3 w-full h-8"
           onChange={(evt) => setNameFilter(evt.target.value)}
         />

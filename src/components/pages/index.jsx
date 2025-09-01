@@ -27,6 +27,10 @@ const Routes = () => {
       path: "/easyvent-platform/*",
       element: <LandingPage />,
     },
+    {
+      path: "/",
+      element: <LandingPage />,
+    }
   ]);
 
   return <RouterProvider router={router} />;
