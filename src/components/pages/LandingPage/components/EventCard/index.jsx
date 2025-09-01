@@ -1,8 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const EventCard = ({ item }) => {
+  const navigate = useNavigate();
   return (
     <Card className="p-0">
       <CardContent className="flex flex-col aspect-square p-4 h-[26rem]">
@@ -22,7 +24,7 @@ const EventCard = ({ item }) => {
           <span className="text-black text-[0.85rem]">37 reviews</span>
         </div>
 
-        <Button className="w-full mt-auto">Book Now</Button>
+        <Button className="w-full mt-auto" onClick={() => navigate("/easyvent-platform/servicehotel")}>Book Now</Button>
       </CardContent>
     </Card>
   )
