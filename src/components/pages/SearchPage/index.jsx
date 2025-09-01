@@ -17,66 +17,142 @@ import Res5 from "@/assets/images/res_5.jpg";
 import { Banknote, ChevronsUpDown } from "lucide-react";
 import Filters from "./components/Filters";
 import SearchSection from "./components/SearchSection";
+import { useState } from "react";
+
+const getTime = (date) => (new Date(date)).getTime();
 
 const hotels = [
   {
     name: "Hue Hotels and Resorts Puerto Princesa",
     image: Hotel1,
     liked: true,
+    location: "Brgy. San Pedro, Puerto Princesa, Palawan",
+    price: 4500,
+    rate: 4,
+    pax: 10,
+    date_availability: ["2025-09-10", "2025-09-15"]
   },
   {
     name: "Pricesa Garden Island resort & Spa",
     image: Hotel2,
     liked: true,
+    location: "Brgy. Sta Monica, Puerto Princesa, Palawan",
+    price: 8500,
+    rate: 2,
+    pax: 15,
+    date_availability: ["2025-09-05", "2025-09-10"]
   },
   {
     name: "Citystate Asturias Hotel Palawan",
     image: Hotel3,
+    location: "Brgy. Lio, El Nido, Palawan",
+    price: 4000,
+    rate: 5,
+    pax: 5,
+    date_availability: ["2025-09-23", "2025-09-29"]
   },
   {
     name: "Ponce De Leon Garden Resort",
     image: Hotel4,
+    location: "Brgy. Mangingisda, Puerto Princesa, Palawan",
+    price: 40500,
+    rate: 5,
+    pax: 65,
+    date_availability: ["2025-09-13", "2025-09-15"]
   },
   {
     name: "Ivy Wall Hotel",
     image: Hotel5,
     liked: true,
+    price: 2000,
+    location: "Brgy. Sicsican, Puerto Princesa, Palawan",
+    rate: 3,
+    pax: 5,
+    date_availability: ["2025-10-05", "2025-09-28"]
   },
 ];
 
-const restaurants = [
-  {
-    name: "La Terrasse Cafe",
-    image: Res1,
-  },
-  {
-    name: "Badjao Seafront",
-    image: Res2,
-  },
-  {
-    name: "Kalui Restaurant",
-    image: Res3,
-  },
-  {
-    name: "Mc Donald's Palawan Junction",
-    image: Res4,
-  },
-  {
-    name: "Tong Yang",
-    image: Res5,
-  },
-]
+const filterList = (list, searchState) => {
+  const filteredList = [];
+   const { date_range = {}, location = "", pax = "", time, budget_range } = searchState;
+
+  if (!date_range?.to && !location && !pax && !budget_range) return list;
+
+  list.forEach((item) => {
+   let searchPoints = 0;
+   
+   const [minPax, maxPax] = pax.split("-") || [0, 0];
+
+   if (location && item.location.toLowerCase().includes(location.toLowerCase())) searchPoints += 1;
+
+   if (item.pax >= minPax && item.pax <= maxPax) searchPoints += 1;
+
+    if (date_range.from && date_range.to && item.date_availability.some((avail) => {
+      const startDate = date_range.from.getTime();
+      const endDate = date_range.to.getTime();
+
+      const availTime = getTime(avail);
+
+      return availTime >= startDate && availTime <= endDate;
+    })) searchPoints += 1;
+
+    
+    console.log("filtering budget", budget_range);
+    if (budget_range) {
+      const [minBudget, maxBudget] = budget_range;
+
+      searchPoints += item.price >= minBudget && item.price <= maxBudget ? 1 : 0;
+    }
+
+    if (searchPoints === 0) return;
+
+    filteredList.push({...item, searchPoints });
+  });
+
+  filteredList.sort((a, b) => b.searchPoints - a.searchPoints);
+
+  return filteredList;
+};
+
+const sortList = (list, sortBy) => {
+  const copy = [...list];
+
+  copy.sort((a, b) => {
+    if (sortBy === "price") return a[sortBy] - b[sortBy];
+
+    return b[sortBy] - a[sortBy]
+  });
+
+  console.log("Sorted", copy, sortBy, copy.sort((item) => item.price - item.price))
+
+  return copy;
+}
 
 const SearchPage = () => {
+  const [searchState, setSearchState] = useState({
+    location: "",
+    date_range: {},
+    time: "",
+    pax: ""
+  });
+
+  console.log("Search State", searchState);
+
+  const [sortBy, setSortBy] = useState("");
+
+  const filteredList = filterList(hotels, searchState);
+
+  const sortedList = sortBy ? sortList(filteredList, sortBy) : filteredList;
+
   return (
     <div className="w-[100vw] h-[100vh] overflow-y-auto overflow-x-hidden relative">
       <NavigationMenu />
       
-      <SearchSection />
+      <SearchSection setSearchState={setSearchState} sortBy={sortBy} setSortBy={setSortBy} />
       <div className="flex gap-[2rem] px-2 md:px-[10rem]">
-        <EventCards list={[...hotels, ...restaurants]} />
+        <EventCards list={[...sortedList]} />
 
-        <Filters />
+        <Filters setSearchState={setSearchState} />
       </div>
       <FooterSection />
     </div>

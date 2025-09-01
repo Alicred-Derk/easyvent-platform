@@ -15,8 +15,14 @@ import {
 import { useState } from "react";
 import { formatCurrency } from "../../../../../api/util";
 
-const Filters = () => {
+const Filters = ({ setSearchState }) => {
   const [range, setRange] = useState([2500, 8000]);
+
+  const updateBudget = (value) => {
+    setRange(value);
+
+    setSearchState((prev) => ({ ...prev, budget_range: value }));
+  }
   return (
     <div className="hidden md:block w-[35%] p-5 pl-[2rem]">
       <div className="relative w-full mb-[1rem]">
@@ -39,10 +45,10 @@ const Filters = () => {
           <div className="py-5">
             <RangeSlider
               min={1000}
-              max={10000}
+              max={50000}
               step={1}
               value={range}
-              onValueChange={setRange}
+              onValueChange={updateBudget}
               formatLabel={(v) => formatCurrency(v)}
               className="w-full"
             />
