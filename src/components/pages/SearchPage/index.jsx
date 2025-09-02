@@ -18,6 +18,7 @@ import { Banknote, ChevronsUpDown } from "lucide-react";
 import Filters from "./components/Filters";
 import SearchSection from "./components/SearchSection";
 import { useState } from "react";
+import NearByMap from "./components/NearyByMap";
 
 const getTime = (date) => (new Date(date)).getTime();
 
@@ -30,7 +31,8 @@ const hotels = [
     price: 4500,
     rate: 4,
     pax: 10,
-    date_availability: ["2025-09-10", "2025-09-15"]
+    date_availability: ["2025-09-10", "2025-09-15"],
+    geocode: [9.7654703,118.7454311],
   },
   {
     name: "Pricesa Garden Island resort & Spa",
@@ -40,7 +42,8 @@ const hotels = [
     price: 8500,
     rate: 2,
     pax: 15,
-    date_availability: ["2025-09-05", "2025-09-10"]
+    date_availability: ["2025-09-05", "2025-09-10"],
+    geocode: [9.7955289,118.7341833],
   },
   {
     name: "Citystate Asturias Hotel Palawan",
@@ -49,7 +52,8 @@ const hotels = [
     price: 4000,
     rate: 5,
     pax: 5,
-    date_availability: ["2025-09-23", "2025-09-29"]
+    date_availability: ["2025-09-23", "2025-09-29"],
+    geocode: [11.1739928,119.4205109],
   },
   {
     name: "Ponce De Leon Garden Resort",
@@ -58,7 +62,8 @@ const hotels = [
     price: 40500,
     rate: 5,
     pax: 65,
-    date_availability: ["2025-09-13", "2025-09-15"]
+    date_availability: ["2025-09-13", "2025-09-15"],
+    geocode: [9.6796805,118.7510964],
   },
   {
     name: "Ivy Wall Hotel",
@@ -68,7 +73,8 @@ const hotels = [
     location: "Brgy. Sicsican, Puerto Princesa, Palawan",
     rate: 3,
     pax: 5,
-    date_availability: ["2025-10-05", "2025-09-28"]
+    date_availability: ["2025-10-05", "2025-09-28"],
+    geocode: [9.794839,118.7132215],
   },
 ];
 
@@ -97,7 +103,6 @@ const filterList = (list, searchState) => {
     })) searchPoints += 1;
 
     
-    console.log("filtering budget", budget_range);
     if (budget_range) {
       const [minBudget, maxBudget] = budget_range;
 
@@ -136,9 +141,9 @@ const SearchPage = () => {
     pax: ""
   });
 
-  console.log("Search State", searchState);
-
   const [sortBy, setSortBy] = useState("");
+
+  const [mapEnabled, setMapEnabled] = useState();
 
   const filteredList = filterList(hotels, searchState);
 
@@ -152,9 +157,16 @@ const SearchPage = () => {
       <div className="flex gap-[2rem] px-2 md:px-[10rem]">
         <EventCards list={[...sortedList]} />
 
-        <Filters setSearchState={setSearchState} />
+        <Filters setMapEnabled={setMapEnabled} eventList={sortedList} setSearchState={setSearchState} />
       </div>
       <FooterSection />
+
+      {mapEnabled && (
+        <div onClick={() => setMapEnabled(false)} className="fixed top-0 left-0 w-[100vw] h-[100vh] px-[10rem] py-10 bg-[#000000AA] backdrop-blur-xs z-[1000]">
+          <div onClick={(event) => event.stopPropagation()} className="h-full">
+            <NearByMap eventList={sortedList} />
+          </div>
+        </div>)}
     </div>
   )
 };

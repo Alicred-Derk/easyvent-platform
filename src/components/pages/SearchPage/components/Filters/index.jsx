@@ -14,8 +14,9 @@ import {
 } from "@/components/ui/card";
 import { useState } from "react";
 import { formatCurrency } from "../../../../../api/util";
+import NearByMap from "../NearyByMap";
 
-const Filters = ({ setSearchState }) => {
+const Filters = ({ eventList, setSearchState, setMapEnabled }) => {
   const [range, setRange] = useState([2500, 8000]);
 
   const updateBudget = (value) => {
@@ -33,6 +34,14 @@ const Filters = ({ setSearchState }) => {
           className="pl-10 pr-3 w-full h-8"
           onChange={(evt) => setNameFilter(evt.target.value)}
         />
+      </div>
+
+      <div className="relative mb-5 h-[12rem] shadow-md border-1 rounded-sm overflow-hidden">
+        <NearByMap eventList={eventList} zoom={12} />
+
+        <div onClick={() => setMapEnabled(true)} className="opacity-0 cursor-pointer hover:opacity-100 absolute top-0 left-0 w-full h-full z-[1000] bg-[#000000AA] text-white flex items-center justify-center">
+          View Nearby Place
+        </div>
       </div>
 
       <Card className="rounded-md py-4 gap-4">

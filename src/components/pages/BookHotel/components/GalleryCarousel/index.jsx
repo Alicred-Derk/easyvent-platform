@@ -8,7 +8,7 @@ import {
 
 const GalleryCarousel = ({ images = [], selectedImage = 0, setSelectedImage}) => {
   return (
-    <div onClick={() => setSelectedImage(null)} className="py-[2rem] px-[10rem] fixed w-[100vw] h-[100vh] bg-[#000000AA] backdrop-blur-xs z-10 top-0 left-0">
+    <div onClick={() => setSelectedImage(null)} className="py-[2rem] px-[10rem] fixed w-[100vw] h-[100vh] bg-[#000000AA] backdrop-blur-xs z-[1001] top-0 left-0">
       <div className="flex flex-col w-full h-full" onClick={(event) => event.stopPropagation()}>
         <div className="p-5 h-[75%] px-10">
           <img src={images[selectedImage]} alt="" className="w-full h-full" />

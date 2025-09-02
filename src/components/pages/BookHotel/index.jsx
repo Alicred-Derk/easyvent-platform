@@ -13,8 +13,15 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import GalleryGrid from "./components/GalleryGrid";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import MapLocation from "./components/MapLocation";
 
 const BookHotel = () => {
+  const [mapEnabled, setMapEnabled] = useState(false);
+  const { state = {} } = useLocation();
+
+  const { name, location, rate } = state;
   return (
     <div className="w-[100vw] h-[100vh] overflow-y-auto overflow-x-hidden relative">
       <NavigationMenu />
@@ -27,16 +34,16 @@ const BookHotel = () => {
                 <div className="flex flex-col gap-5 w-[70%]">
                   <div className="flex justify-between items-start">
                     <div className="flex flex-col gap-2">
-                      <p className="font-title font-bold text-[1.3rem] text-[#183B4E]">Pricesa Garden Island Resort & Spa</p>
-                      <p className="flex gap-2 items-center text-[#27548a]"><MapPin size={14} /> Brgy. Bancao-Bancao, Puerto Princesa City, Palawan</p>
+                      <p className="font-title font-bold text-[1.3rem] text-[#183B4E]">{name}</p>
+                      <p className="flex gap-2 items-center text-[#27548a]"><MapPin size={14} /> {location}</p>
                     </div>
                     <div className="flex items-center">
                       <div className="flex items-center gap-2 text-orange-300">
-                        <Star size={20} fill="#ffb86a" />
-                        <Star size={20} fill="#ffb86a" />
-                        <Star size={20} fill="#ffb86a" />
-                        <Star size={20} />
-                        <Star size={20} />
+                        <Star size={20} fill={rate >= 1 ? "#ffb86a" : "transparent"} />
+                        <Star size={20} fill={rate >= 2 ? "#ffb86a" : "transparent"} />
+                        <Star size={20} fill={rate >= 3 ? "#ffb86a" : "transparent"} />
+                        <Star size={20} fill={rate >= 4 ? "#ffb86a" : "transparent"} />
+                        <Star size={20} fill={rate === 5 ? "#ffb86a" : "transparent"} />
                       </div>
                       <Button variant="outline" className="rounded-full w-[2.3rem] h-[2.3rem] ml-5">
                         <Heart />
@@ -152,6 +159,13 @@ const BookHotel = () => {
                 </div>
 
                 <div className="w-[30%]">
+                  <div className="relative mb-5 h-[12rem] shadow-md border-1 rounded-sm overflow-hidden">
+                    <MapLocation name={name} geocode={state.geocode} zoom={15} />
+
+                    <div onClick={() => setMapEnabled(true)} className="opacity-0 cursor-pointer hover:opacity-100 absolute top-0 left-0 w-full h-full z-[1000] bg-[#000000AA] text-white flex items-center justify-center">
+                      View Location on Map
+                    </div>
+                  </div>
                   <Card>
                     <CardContent>
                       <p className="font-title text-[#183B4E] text-[1rem] font-semibold mb-5">
@@ -265,6 +279,13 @@ const BookHotel = () => {
           </Card>
         </div>
       <FooterSection />
+
+      {mapEnabled && (
+        <div onClick={() => setMapEnabled(false)} className="fixed top-0 left-0 w-[100vw] h-[100vh] px-[10rem] py-10 bg-[#000000AA] backdrop-blur-xs z-[1000]">
+          <div onClick={(event) => event.stopPropagation()} className="h-full">
+            <MapLocation name={name} rate={rate} geocode={state.geocode} zoom={13} />
+          </div>
+        </div>)}
     </div>
   )
 };

@@ -44,7 +44,7 @@ const WideEventCard = ({ item }) => {
             <Button variant="outline" className="rounded-full w-[2.3rem] h-[2.3rem]">
               <Heart strokeWidth={item.liked ? 0 : 2} fill={item.liked ? "#ff7b7b" : "transparent"} />
             </Button>
-            <Button className="w-[10rem] mt-auto ml-auto" onClick={() => navigate("/easyvent-platform/servicehotel")}>Book Now</Button>
+            <Button className="w-[10rem] mt-auto ml-auto" onClick={() => navigate("/easyvent-platform/servicehotel", { state: item })}>Book Now</Button>
           </div>
         </div>
       </CardContent>
