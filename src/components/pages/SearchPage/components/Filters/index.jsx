@@ -16,8 +16,8 @@ import { useState } from "react";
 import { formatCurrency } from "../../../../../api/util";
 import NearByMap from "../NearyByMap";
 
-const Filters = ({ eventList, setSearchState, setMapEnabled }) => {
-  const [range, setRange] = useState([2500, 8000]);
+const Filters = ({ eventList, setSearchState, setMapEnabled, setNameFilter }) => {
+  const [range, setRange] = useState([2500, 13000]);
 
   const updateBudget = (value) => {
     setRange(value);

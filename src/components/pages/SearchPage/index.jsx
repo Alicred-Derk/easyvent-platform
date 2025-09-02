@@ -142,10 +142,11 @@ const SearchPage = () => {
   });
 
   const [sortBy, setSortBy] = useState("");
+  const [nameFilter, setNameFilter] = useState("");
 
   const [mapEnabled, setMapEnabled] = useState();
 
-  const filteredList = filterList(hotels, searchState);
+  const filteredList = filterList(hotels, searchState).filter(item => item.name.toLowerCase().includes(nameFilter.toLowerCase()));
 
   const sortedList = sortBy ? sortList(filteredList, sortBy) : filteredList;
 
@@ -157,7 +158,7 @@ const SearchPage = () => {
       <div className="flex gap-[2rem] px-2 md:px-[10rem]">
         <EventCards list={[...sortedList]} />
 
-        <Filters setMapEnabled={setMapEnabled} eventList={sortedList} setSearchState={setSearchState} />
+        <Filters setNameFilter={setNameFilter} setMapEnabled={setMapEnabled} eventList={sortedList} setSearchState={setSearchState} />
       </div>
       <FooterSection />
 
