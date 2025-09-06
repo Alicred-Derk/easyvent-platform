@@ -24,6 +24,7 @@ const Filters = ({ eventList, setSearchState, setMapEnabled, setNameFilter }) =>
 
     setSearchState((prev) => ({ ...prev, budget_range: value }));
   }
+
   return (
     <div className="hidden md:block w-[35%] p-5 pl-[2rem]">
       <div className="relative w-full mb-[1rem]">

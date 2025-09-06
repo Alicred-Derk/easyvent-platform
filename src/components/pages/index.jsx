@@ -4,6 +4,8 @@ import SearchPage from "./SearchPage";
 import LoginPage from "./LoginPage";
 import BookService from "./BookService";
 import BookHotel from "./BookHotel";
+import CreateAccount from "./CreateAccount";
+import ProfileSetup from "./ProfileSetup";
 
 const Routes = () => {
   const router = createBrowserRouter([
@@ -14,6 +16,14 @@ const Routes = () => {
     {
       path: "/easyvent-platform/login",
       element: <LoginPage />
+    },
+    {
+      path: "/easyvent-platform/signup",
+      element: <CreateAccount />,
+    },
+    {
+      path: "/easyvent-platform/signup/profile",
+      element: <ProfileSetup />,
     },
     {
       path: "/easyvent-platform/servicebook",
@@ -30,7 +40,7 @@ const Routes = () => {
     {
       path: "/",
       element: <LandingPage />,
-    }
+    },
   ]);
 
   return <RouterProvider router={router} />;
