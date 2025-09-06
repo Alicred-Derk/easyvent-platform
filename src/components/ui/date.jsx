@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/popover"
 import { formatDate } from "../../api/util"
 
-export function DateInput({ defaultValue, onChange }) {
+const DateInput = ({ defaultValue, onChange }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 w-full">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -42,3 +42,5 @@ export function DateInput({ defaultValue, onChange }) {
     </div>
   )
 }
+
+export default DateInput;
