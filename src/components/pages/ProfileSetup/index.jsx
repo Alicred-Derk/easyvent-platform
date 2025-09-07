@@ -6,9 +6,8 @@ const ProfileSetup = () => {
     <div className="w-[100vw] h-[100vh] overflow-y-auto overflow-x-hidden relative">
       <NavigationMenu />
       <div className="w-full flex items-center justify-center py-[2rem]">
-        <ProfileForm />
+        <ProfileForm isCreating />
       </div>
-
     </div>
   )
 }
