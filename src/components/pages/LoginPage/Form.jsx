@@ -3,18 +3,67 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
-import Image from "@/assets/images/login.jpg";
+import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { toast } from "sonner"
 
 const LoginForm = ({
   className,
   ...props
 }) => {
+  const navigate = useNavigate();
+  const [loginState, setLoginState] = useState({});
+
+  const navigateSignup = () => {
+    navigate("/easyvent-platform/signup");
+  };
+
+  console.log("Curr State", loginState)
+
+  const updateLoginState = (event, fieldName) => {
+    setLoginState((prev) => ({ ...prev, [fieldName]: event.target.value }));
+  }
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("email", loginState.email);
+    formData.append("password", loginState.password);
+
+    fetch("http://localhost/ems-platform/users/login.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then(({ data, error } = {}) => {
+        if (error) {
+          toast(error.title, {
+            description: error.message,
+          });
+          return;
+        }
+
+        if (data) {
+          localStorage.setItem("user-data", JSON.stringify({ ...data ?? {} }));
+          const { personal_name, last_name } = data;
+
+          if (!personal_name && !last_name) {
+            navigate("/easyvent-platform/signup/profile", { state: { id: data.id, email: data.email } });
+            return;
+          }
+
+          navigate("/easyvent-platform/dashboard");
+        }
+      })
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-1">
-          <form className="p-6 md:p-8">
+          <form className="p-6 md:p-8" onSubmit={handleLogin}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
@@ -29,6 +78,7 @@ const LoginForm = ({
                   type="email"
                   placeholder="m@example.com"
                   required
+                  onChange={(event) => updateLoginState(event, "email")}
                 />
               </div>
               <div className="grid gap-3">
@@ -41,7 +91,12 @@ const LoginForm = ({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  onChange={(event) => updateLoginState(event, "password")}
+                />
               </div>
               <Button type="submit" className="w-full">
                 Login
@@ -82,7 +137,7 @@ const LoginForm = ({
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
-                <a href="#" className="underline underline-offset-4">
+                <a onClick={navigateSignup} className="cursor-pointer underline underline-offset-4">
                   Sign up
                 </a>
               </div>
