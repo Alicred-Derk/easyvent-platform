@@ -5,15 +5,18 @@ import {
   AudioWaveform,
   BookOpen,
   Bot,
+  CalendarClock,
   Command,
   Frame,
   GalleryVerticalEnd,
   LayoutDashboardIcon,
   Map,
+  MessagesSquare,
   NotebookPenIcon,
   PieChart,
   Settings2,
   SquareTerminal,
+  User,
   Users2,
 } from "lucide-react"
 
@@ -33,12 +36,12 @@ import {
 const data = {
   user: {
     name: "Alfred Jay V. Ngujo",
-    email: "team@petros.com",
+    email: "team@gmail.com",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
     {
-      name: "Petrosphere Inc",
+      name: "EasyVent",
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
     },
@@ -51,26 +54,36 @@ const data = {
       isActive: true,
     },
     {
-      title: "Reports",
+      title: "Services",
       url: "#",
       icon: NotebookPenIcon,
     },
     {
-      title: "Users",
+      title: "Bookings",
       url: "#",
-      icon: Users2,
+      icon: CalendarClock,
+    },
+    {
+      title: "Messages",
+      url: "#",
+      icon: MessagesSquare,
+    },
+    {
+      title: "Profile",
+      url: "#",
+      icon: User,
     },
   ],
 }
 
-export function AppSidebar({ ...props }) {
+export function AppSidebar({ onClick, ...props }) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain onClick={onClick} items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

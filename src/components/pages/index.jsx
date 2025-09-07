@@ -6,9 +6,14 @@ import BookService from "./BookService";
 import BookHotel from "./BookHotel";
 import CreateAccount from "./CreateAccount";
 import ProfileSetup from "./ProfileSetup";
+import Dashboard from "./Dashboard";
 
 const Routes = () => {
   const router = createBrowserRouter([
+    {
+      path: "/easyvent-platform/dashboard",
+      element: <Dashboard />
+    },
     {
       path: "/easyvent-platform/search",
       element: <SearchPage />

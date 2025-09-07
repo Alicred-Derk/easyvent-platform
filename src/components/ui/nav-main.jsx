@@ -20,6 +20,7 @@ import {
 
 export function NavMain({
   items,
+  onClick,
 }) {
   return (
     <SidebarGroup>
@@ -33,7 +34,7 @@ export function NavMain({
             className="group/collapsible"
           >
             <SidebarMenuItem>
-                <SidebarMenuButton tooltip={item.title}>
+                <SidebarMenuButton tooltip={item.title} onClick={() => onClick(item.title)}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                 </SidebarMenuButton>

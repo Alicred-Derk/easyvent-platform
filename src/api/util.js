@@ -23,6 +23,17 @@ export const formatCurrency = (amount = 0) => {
   return formatter.format(amount);
 }
 
+export function formatCurrencyWithoutSymbol(locale, currency, value) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency,
+    currencyDisplay: 'code'
+  })
+    .format(value)
+    .replace(currency, '')
+    .trim();
+}
+
 export const debounce = (func, delay = 1000) => {
   let timeoutId;
   return function (...args) {
