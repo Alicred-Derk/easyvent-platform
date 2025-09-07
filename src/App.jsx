@@ -1,5 +1,6 @@
 import Routes from './components/pages'
 import RouteContextProvider from './RouteContext';
+import { Toaster } from "./components/ui/sonner";
 
 import "./App.css";
 
@@ -9,6 +10,8 @@ function App() {
       <RouteContextProvider>
         <Routes />
       </RouteContextProvider>
+
+      <Toaster position="top-center" />
     </>
   )
 }
