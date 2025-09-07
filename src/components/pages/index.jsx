@@ -7,12 +7,39 @@ import BookHotel from "./BookHotel";
 import CreateAccount from "./CreateAccount";
 import ProfileSetup from "./ProfileSetup";
 import Dashboard from "./Dashboard";
+import Services from "./Dashboard/components/Services";
+import Bookings from "./Dashboard/components/Bookings";
+import Messages from "./Dashboard/components/Messages";
+import Profile from "./Dashboard/components/Profile";
+import ServiceForm from "./Dashboard/components/Services/form/ServiceForm";
 
 const Routes = () => {
   const router = createBrowserRouter([
     {
-      path: "/easyvent-platform/dashboard",
-      element: <Dashboard />
+      path: "/easyvent-platform/dashboard/",
+      element: <Dashboard />,
+      children: [
+        {
+          path: "services",
+          element: <Services />
+        },
+        {
+          path: "services/form",
+          element: <ServiceForm />
+        },
+        {
+          path: "bookings",
+          element: <Bookings />
+        },
+        {
+          path: "profile",
+          element: <Profile />
+        },
+        {
+          path: "messages",
+          element: <Messages />
+        },
+      ]
     },
     {
       path: "/easyvent-platform/search",

@@ -49,28 +49,28 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "",
       icon: LayoutDashboardIcon,
       isActive: true,
     },
     {
       title: "Services",
-      url: "#",
+      url: "services",
       icon: NotebookPenIcon,
     },
     {
       title: "Bookings",
-      url: "#",
+      url: "bookings",
       icon: CalendarClock,
     },
     {
       title: "Messages",
-      url: "#",
+      url: "messages",
       icon: MessagesSquare,
     },
     {
       title: "Profile",
-      url: "#",
+      url: "profile",
       icon: User,
     },
   ],

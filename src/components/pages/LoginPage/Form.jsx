@@ -18,8 +18,6 @@ const LoginForm = ({
     navigate("/easyvent-platform/signup");
   };
 
-  console.log("Curr State", loginState)
-
   const updateLoginState = (event, fieldName) => {
     setLoginState((prev) => ({ ...prev, [fieldName]: event.target.value }));
   }

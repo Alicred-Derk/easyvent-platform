@@ -17,11 +17,13 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { useNavigate } from "react-router-dom"
 
 export function NavMain({
   items,
   onClick,
 }) {
+  const navigate = useNavigate();
   return (
     <SidebarGroup>
       <SidebarGroupLabel>EMS</SidebarGroupLabel>
@@ -34,7 +36,9 @@ export function NavMain({
             className="group/collapsible"
           >
             <SidebarMenuItem>
-                <SidebarMenuButton tooltip={item.title} onClick={() => onClick(item.title)}>
+                <SidebarMenuButton tooltip={item.title} onClick={() => {
+                  navigate(`/easyvent-platform/dashboard/${item.url}`)
+                }}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                 </SidebarMenuButton>

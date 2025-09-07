@@ -23,7 +23,7 @@ const PropertyImages = ({ defaultValues = [], updateFormState }) => {
     setFiles((prev) => {
       const updated = ([...prev, ...files]);
 
-      updateFormState("images", updated);
+      updateFormState("images_url", updated);
 
       return updated;
     });
@@ -34,7 +34,7 @@ const PropertyImages = ({ defaultValues = [], updateFormState }) => {
       const copy = [...prev];
       copy.splice(index, 1);
 
-      updateFormState("images", copy);
+      updateFormState("images_url", copy);
 
       return copy;
     })
@@ -46,7 +46,7 @@ const PropertyImages = ({ defaultValues = [], updateFormState }) => {
     setFiles((prev) => {
       const updated = ([...prev, ...event.target.files]);
 
-      updateFormState("images", updated);
+      updateFormState("images_url", updated);
 
       return updated;
     });

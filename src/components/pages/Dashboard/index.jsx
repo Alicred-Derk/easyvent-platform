@@ -13,24 +13,12 @@ import {
 } from "@/components/ui/sidebar";
 import NavigationMenu from "../../custom-ui/NavigationMenu";
 import { useState } from "react";
-import Analytics from "./components/Analytics";
-import Services from "./components/Services";
-import Bookings from "./components/Bookings";
-import Messages from "./components/Messages";
-import Profile from "./components/Profile";
+
+import { Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
   const [pageSelected, setPageSelected] = useState("Dashboard");
 
-  const pages = {
-    Dashboard: Analytics,
-    Services: Services,
-    Bookings: Bookings,
-    Messages: Messages,
-    Profile: Profile,
-  };
-
-  const PageComponent = pages[pageSelected];
 
   return (
     <div className="w-[100vw] h-[100vh] overflow-y-auto overflow-x-hidden relative">
@@ -57,7 +45,7 @@ const Dashboard = () => {
             </div>
           </header>
           
-          <PageComponent />
+          <Outlet />
         </SidebarInset>
       </SidebarProvider>
     </div>
