@@ -50,7 +50,9 @@ const ProviderForm = () => {
         if (error) {
           toast(error.title, {
             description: error.message,
-          })
+          });
+
+          return;
         }
 
         if (data) {
