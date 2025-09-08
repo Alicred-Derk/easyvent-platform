@@ -4,10 +4,14 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Textarea from "@/components/ui/textarea";
 import { CirclePlus, Trash } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const HighlightsForm = ({ defaultValues = [], updateFormState }) => {
   const [highlightList, setHighlistList] = useState(defaultValues);
+  
+  useEffect(() => {
+    setHighlistList(defaultValues);
+  }, [defaultValues])
 
   const addHighlight = () => {
     setHighlistList((prev) => {

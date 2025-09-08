@@ -2,10 +2,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Textarea from "@/components/ui/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PropertyForm = ({ defaultValues = {}, updateFormState }) => {
   const [propertyState, setPropertyState] = useState(defaultValues);
+
+  useEffect(() => {
+    setPropertyState(defaultValues);
+  }, [defaultValues])
 
   const { property_name, property_description } = propertyState;
 

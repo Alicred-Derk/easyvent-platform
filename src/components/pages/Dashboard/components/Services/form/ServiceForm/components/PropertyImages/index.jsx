@@ -4,12 +4,16 @@ import { Image, Upload, X } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const PropertyImages = ({ defaultValues = [], updateFormState }) => {
   const inputRef = useRef();
 
   const [files, setFiles] = useState(defaultValues);
+
+  useEffect(() => {
+    setFiles(defaultValues);
+  }, [defaultValues]);
 
   const handleBrowse = () => {
     inputRef.current.click();
@@ -52,6 +56,25 @@ const PropertyImages = ({ defaultValues = [], updateFormState }) => {
     });
   }
 
+  const formattedUrls = useMemo(() => {
+    if (files.length === 0) return [];
+
+    const formatted = files.map((item) => {
+      if (typeof item === "string") {
+
+        return `http://localhost/ems-platform/uploads/${item}`;
+      }
+
+      if (typeof item === "object") {
+        return URL.createObjectURL(item);
+      }
+    });
+
+    const filtered = formatted.filter(Boolean);
+
+    return filtered;
+  }, [files]);
+
   return (
     <Card>
       <CardContent>
@@ -78,14 +101,14 @@ const PropertyImages = ({ defaultValues = [], updateFormState }) => {
           </div>
         )}
 
-        {files.length !== 0 && (
+        {formattedUrls.length !== 0 && (
           <div
             className="border-dashed gap-5 border-1 m-h-[12rem] rounded-md flex justify-between flex-col p-5 py-3"
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
           >
             <div className="flex justify-between">
-              <p>Uploaded Files ({files.length})</p>
+              <p>Uploaded Files ({formattedUrls.length})</p>
 
               <Label htmlFor="property_images">
                 <Button variant="outline" type="button" onClick={handleBrowse}><Upload /> Add More</Button>
@@ -93,11 +116,11 @@ const PropertyImages = ({ defaultValues = [], updateFormState }) => {
             </div>
 
             <div className="grid grid-cols-3 items-start">
-              {files.map((file, index) => (
+              {formattedUrls.map((file, index) => (
                 <div className="w-[12rem] mr-4 mb-3 shadow-sm border-1 rounded-md relative">
                   <div onClick={() => handleRemove(index)} className="bg-black flex items-center justify-center text-white absolute top-[-0.4rem] right-[-0.4rem] w-[1.2rem] h-[1.2rem] rounded-full"><X size={15} /></div>
                   <div className="rounded-md overflow-hidden">
-                    <img src={URL.createObjectURL(file)} />
+                    <img src={file} />
                   </div>
                 </div>
               ))}

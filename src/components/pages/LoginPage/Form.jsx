@@ -48,7 +48,12 @@ const LoginForm = ({
           const { personal_name, last_name } = data;
 
           if (!personal_name && !last_name) {
-            navigate("/easyvent-platform/signup/profile", { state: { id: data.id, email: data.email } });
+            const todayDate = new Date();
+            todayDate.setDate(todayDate.getDate() + 1);
+
+            const tomorrow = todayDate.getTime();
+
+            navigate("/easyvent-platform/signup/profile", { state: { id: data.id, email: data.email, expiration: tomorrow } });
             return;
           }
 

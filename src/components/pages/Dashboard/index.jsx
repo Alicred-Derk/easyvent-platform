@@ -12,12 +12,28 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import NavigationMenu from "../../custom-ui/NavigationMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [pageSelected, setPageSelected] = useState("Dashboard");
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user-data");
+
+    if (!userData) {
+      navigate("/easyvent-platform/");
+
+      return;
+    }
+
+    setIsLoading(false);
+  }, []);
+
+  if (isLoading) return null;
 
 
   return (

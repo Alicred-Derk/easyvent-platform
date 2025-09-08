@@ -9,12 +9,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Circle, CirclePlus, CopyPlus, ListPlus, Minus, PhilippinePeso, Plus, Trash, Users, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { formatCurrencyWithoutSymbol } from "@/api/util";
 
@@ -274,12 +273,16 @@ const Packages = ({ defaultValues = [], updateFormState }) => {
   const [packagesList, setPackagesList] = useState(defaultValues);
   const [selectedPackage, setSelectedPackage] = useState(null);
 
+  useEffect(() => {
+    setPackagesList(defaultValues);
+  }, [defaultValues]);
+
 
   const onCreate = (packageItem) => {
     setPackagesList((prev) => {
       const updated = ([...prev, packageItem]);
 
-      updateFormState("package_list", updated);
+      updateFormState("packages_list", updated);
 
       return updated;
     });
@@ -291,7 +294,7 @@ const Packages = ({ defaultValues = [], updateFormState }) => {
 
       copy.splice(index, 1, packageItem);
 
-      updateFormState("package_list", copy);
+      updateFormState("packages_list", copy);
 
       return copy;
     });
@@ -303,7 +306,7 @@ const Packages = ({ defaultValues = [], updateFormState }) => {
 
       copy.splice(index, 1);
 
-      updateFormState("package_list", copy);
+      updateFormState("packages_list", copy);
 
       return copy;
     });

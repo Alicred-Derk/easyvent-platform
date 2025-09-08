@@ -7,20 +7,34 @@ import HighlightsForm from "./components/HgihlightsForm";
 import AmenitiesForm from "./components/AmenitiesForm";
 
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ServiceForm = () => {
+  const navigate = useNavigate();
   const [formState, setFormState] = useState({});
   const { state = {} } = useLocation();
-  const { category, property_details = {}, images_url = [], highlights = [], location = {}, amenities = [], packages_list } = formState;
+  const { id, status, category, property_details = {}, images_url = [], highlights = [], location = {}, amenities = [], packages_list = [] } = formState;
 
-  useEffect(() => setFormState(state ?? {}), [state]);
+  useEffect(() => {
+    if (!state) return;
+
+    const newState = {
+      ...state,
+      property_details: {
+        property_name: state.property_name,
+        property_description: state.property_description,
+      }
+    }
+    setFormState(newState ?? {})
+  }, [state]);
+
+  console.log("Form State [123123]", formState, amenities);
 
   const updateFormState = (fieldName, updatedState) => {
     setFormState((prev) => ({ ...prev, [fieldName]: updatedState }));
   }
 
-  const createService = async (status) => {
+  const setupFormData = async (status) => {
     const formData = new FormData();
     const { property_name = "", property_description = "" } = property_details;
     const files = []
@@ -31,9 +45,6 @@ const ServiceForm = () => {
 
       if (typeof item === "object") return files.push(item);
     });
-
-    console.log("File", files, images_url);
-
     if (files.length > 0) {
       const uploadForm = new FormData();
 
@@ -51,16 +62,87 @@ const ServiceForm = () => {
       }
     }
 
+    const userData = localStorage.getItem("user-data");
+    const parsedUserData = JSON.parse(userData);
+
+    if (id) formData.append("id", id);
+
+    formData.append("userId", parsedUserData.id);
+
     formData.append("category", category);
     formData.append("status", status);
     formData.append("property_name", property_name);
     formData.append("property_description", property_description);
-    formData.append("images_url", JSON.stringify(urls));
-    formData.append("highlights", JSON.stringify(highlights));
-    formData.append("amenities", JSON.stringify(amenities));
-    formData.append("location", JSON.stringify(location));
+    formData.append("images_url", JSON.stringify(urls ?? []));
+    formData.append("highlights", JSON.stringify(highlights ?? []));
+    formData.append("amenities", JSON.stringify(amenities ?? []));
+    formData.append("location", JSON.stringify(location ?? {}));
+    formData.append("packages_list", JSON.stringify(packages_list));
+
+    return formData;
+  }
+
+  const createService = async (status) => {
+    const formData = await setupFormData(status);
+
+    const res = await fetch('http://localhost/ems-platform/services/create.php', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const json = await res.json();
+
+    if (json.error)  {
+      
+    }
+
+    if (json.data) {
+      navigate("/easyvent-platform/dashboard/services/details", { state: { id: json.data.id }})
+    }
     
+  }
+
+  const updateService = async (status) => {
+    const formData = await setupFormData(status);
     
+    const res = await fetch('http://localhost/ems-platform/services/update.php', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const json = await res.json();
+
+    if (json.error)  {
+      
+    }
+
+    if (json.data) {
+      navigate("/easyvent-platform/dashboard/services/details", { state: { id: json.data.id }})
+    }
+  };
+
+  const handlePublish = () => {
+    if (id) {
+      updateService("Published");
+    } else {
+      createService("Published");
+    }
+  }
+
+  const handleDraft = () => {
+    if (id) {
+      updateService("Draft");
+    } else {
+      createService("Draft");
+    }
+  }
+
+  const handleDeactivate = () => {
+    if (id) {
+      updateService("Deactivated");
+    } else {
+      createService("Deactivated");
+    }
   }
 
   console.log("Current Form State", formState);
@@ -69,13 +151,13 @@ const ServiceForm = () => {
     <div className="px-5">
       <div className="flex items-center justify-between">
         <p className="font-poppins font-bold text-[1.5rem]">
-          Venue Form
+          {category} Form
         </p>
 
         <div className="flex gap-2 items-center">
-          <Button variant="outline" className="bg-gray-300">Discard</Button>
-          <Button variant="outline">Save as Draft</Button>
-          <Button type="button" onClick={() => createService("Publish")}>Publish</Button>
+          {(!id || status === "Draft") && <Button variant="outline" type="button" onClick={handleDraft}>Save as Draft</Button>}
+          {status === "Published" && <Button variant="outline" type="button" onClick={handleDeactivate}>Deactivate</Button>}
+          <Button type="button" className="bg-[#183B4E] hover:bg-[#2e5e78]" onClick={handlePublish}>Publish Service</Button>
         </div>
       </div>
 

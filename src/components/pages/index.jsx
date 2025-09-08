@@ -12,6 +12,7 @@ import Bookings from "./Dashboard/components/Bookings";
 import Messages from "./Dashboard/components/Messages";
 import Profile from "./Dashboard/components/Profile";
 import ServiceForm from "./Dashboard/components/Services/form/ServiceForm";
+import ServiceDetails from "./Dashboard/components/Services/components/ServiceDetails";
 
 const Routes = () => {
   const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const Routes = () => {
         {
           path: "services/form",
           element: <ServiceForm />
+        },
+        {
+          path: "services/details",
+          element: <ServiceDetails />
         },
         {
           path: "bookings",

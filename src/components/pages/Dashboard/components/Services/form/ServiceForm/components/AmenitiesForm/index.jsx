@@ -4,10 +4,14 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Textarea from "@/components/ui/textarea";
 import { CirclePlus, Trash } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AmenitiesForm = ({ defaultValues = [], updateFormState  }) => {
   const [amenities, setAmenities] = useState(defaultValues);
+
+  useEffect(() => {
+    setAmenities(defaultValues);
+  }, [defaultValues]);
 
   const addAmenity = () => {
     setAmenities((prev) => {

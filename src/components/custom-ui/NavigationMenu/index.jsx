@@ -7,6 +7,8 @@ const NavigationMenu = () => {
 
   const navigateLogin = () => navigate("/easyvent-platform/login");
 
+  const userData = localStorage.getItem("user-data");
+
   return (
     <div className="w-[100%] flex h-[3.8rem] shadow-2xs bg-white justify-between items-center-safe px-8 sticky z-[10] top-[0px]">
       <div></div>
@@ -28,7 +30,7 @@ const NavigationMenu = () => {
           <Button variant="ghost">Help & Support</Button>
         </div>
 
-        <Button className="bg-[#183B4E] hover:bg-[#2e5e78]" onClick={navigateLogin}>Log In <LogIn /> </Button>
+        {!userData && <Button className="bg-[#183B4E] hover:bg-[#2e5e78]" onClick={navigateLogin}>Log In <LogIn /> </Button>}
       </div>
     </div>
   )

@@ -76,6 +76,10 @@ const LocationForm = ({ defaultValues = {}, updateFormState }) => {
   const [citiesList, setCitiesList] = useState([]);
   const [barangayList, setBarangayList] = useState([]);
 
+  useEffect(() => {
+    setLocationState(defaultValues);
+  }, [defaultValues]);
+
   const { province, city, barangay, street, building_no, zip_code, geocode } = locationState;
 
   const fetchProvinces = async () => {
