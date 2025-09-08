@@ -17,7 +17,7 @@ import ServiceDetails from "./Dashboard/components/Services/components/ServiceDe
 const Routes = () => {
   const router = createBrowserRouter([
     {
-      path: "/easyvent-platform/dashboard/",
+      path: "/dashboard/",
       element: <Dashboard />,
       children: [
         {
@@ -47,31 +47,31 @@ const Routes = () => {
       ]
     },
     {
-      path: "/easyvent-platform/search",
+      path: "/search",
       element: <SearchPage />
     },
     {
-      path: "/easyvent-platform/login",
+      path: "/login",
       element: <LoginPage />
     },
     {
-      path: "/easyvent-platform/signup",
+      path: "/signup",
       element: <CreateAccount />,
     },
     {
-      path: "/easyvent-platform/signup/profile",
+      path: "/signup/profile",
       element: <ProfileSetup />,
     },
     {
-      path: "/easyvent-platform/servicebook",
+      path: "/servicebook",
       element: <BookService />
     },
     {
-      path: "/easyvent-platform/servicehotel",
+      path: "/servicehotel",
       element: <BookHotel />
     },
     {
-      path: "/easyvent-platform/*",
+      path: "/*",
       element: <LandingPage />,
     },
     {
