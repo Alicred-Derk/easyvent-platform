@@ -107,7 +107,7 @@ const SearchPage = () => {
 
     return ({
       name: property_name,
-      image: `http://localhost/ems-platform/uploads/${images_url[0]}`,
+      image: `https://easyvent.iceiy.com/ems-platform/uploads/${images_url[0]}`,
       price: minPrice,
       location: `${formattedLoc} ${zip_code}`,
       rate: 0,

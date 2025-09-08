@@ -34,7 +34,7 @@ const Events = ({ services = [] }) => {
         id,
         name: property_name,
         location: `${[street, barangay, city, province].filter(Boolean).join(", ")} ${zip_code}`,
-        image: `http://localhost/ems-platform/uploads/${images_url[0]}`
+        image: `https://easyvent.iceiy.com/ems-platform/uploads/${images_url[0]}`
       };
 
       if (category === "Hotel/Resort") {

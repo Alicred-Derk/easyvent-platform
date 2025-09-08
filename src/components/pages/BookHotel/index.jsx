@@ -39,7 +39,7 @@ const BookHotel = () => {
 
   console.log("Event Locatin", geocode);
 
-  const urls = images_url.map((item) => `http://localhost/ems-platform/uploads/${item}`);
+  const urls = images_url.map((item) => `https://easyvent.iceiy.com/ems-platform/uploads/${item}`);
 
   const initiateServiceData = async (id) => {
     const data = await getServiceData(id);

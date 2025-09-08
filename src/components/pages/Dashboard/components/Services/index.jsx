@@ -240,7 +240,7 @@ const Services = () => {
       formData.append("category", categoryParams);
     }
 
-    fetch("http://localhost/ems-platform/services/fetchByProvider.php", {
+    fetch("https://easyvent.iceiy.com/ems-platform/services/fetchByProvider.php", {
       method: "POST",
       body: formData,
     })

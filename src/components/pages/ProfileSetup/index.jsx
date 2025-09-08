@@ -27,7 +27,7 @@ const ProfileSetup = () => {
 
     if (file) formData.append("file", file);
 
-    fetch("http://localhost/ems-platform/users/update.php", {
+    fetch("https://easyvent.iceiy.com/ems-platform/users/update.php", {
       method: "POST",
       body: formData,
     })

@@ -40,7 +40,7 @@ const CustomerForm = () => {
     form.append("password", password);
     form.append("role", "Customer");
 
-    fetch("http://localhost/ems-platform/users/create.php", {
+    fetch("https://easyvent.iceiy.com/ems-platform/users/create.php", {
       method: "POST",
       body: form,
     })

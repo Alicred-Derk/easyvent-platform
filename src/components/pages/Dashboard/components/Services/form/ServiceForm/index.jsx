@@ -50,7 +50,7 @@ const ServiceForm = () => {
 
       files.forEach((file) => uploadForm.append("images[]", file))
 
-      const res = await fetch('http://localhost/ems-platform/services/upload_images.php', {
+      const res = await fetch('https://easyvent.iceiy.com/ems-platform/services/upload_images.php', {
         method: 'POST',
         body: uploadForm,
       });
@@ -85,7 +85,7 @@ const ServiceForm = () => {
   const createService = async (status) => {
     const formData = await setupFormData(status);
 
-    const res = await fetch('http://localhost/ems-platform/services/create.php', {
+    const res = await fetch('https://easyvent.iceiy.com/ems-platform/services/create.php', {
       method: 'POST',
       body: formData,
     });
@@ -105,7 +105,7 @@ const ServiceForm = () => {
   const updateService = async (status) => {
     const formData = await setupFormData(status);
     
-    const res = await fetch('http://localhost/ems-platform/services/update.php', {
+    const res = await fetch('https://easyvent.iceiy.com/ems-platform/services/update.php', {
       method: 'POST',
       body: formData,
     });

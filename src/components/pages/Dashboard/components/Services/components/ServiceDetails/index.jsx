@@ -65,7 +65,7 @@ const ServiceDetails = () => {
         <div className="sticky top-25">
           <Card className="py-0 bg-gray-400 h-[18rem] rounded-md overflow-hidden">
           <CardContent className="px-0 h-full">
-            <img className="w-full h-full" src={`http://localhost/ems-platform/uploads/${selectedUrl}`} />
+            <img className="w-full h-full" src={`https://easyvent.iceiy.com/ems-platform/uploads/${selectedUrl}`} />
           </CardContent>
         </Card>
 
@@ -80,7 +80,7 @@ const ServiceDetails = () => {
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2">
                   <Card className="py-0 bg-gray-400 h-[8rem] rounded-md overflow-hidden" onClick={() => setSelectedImageIndx(index)}>
                     <CardContent className="px-0 h-full">
-                      <img className="w-full h-full" src={`http://localhost/ems-platform/uploads/${item}`} />
+                      <img className="w-full h-full" src={`https://easyvent.iceiy.com/ems-platform/uploads/${item}`} />
                     </CardContent>
                   </Card>
                 </CarouselItem>

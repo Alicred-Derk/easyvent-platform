@@ -1,5 +1,5 @@
 const getPublishedServices = async () => {
-  const res = await fetch("http://localhost/ems-platform/services/publishServices.php");
+  const res = await fetch("https://easyvent.iceiy.com/ems-platform/services/publishServices.php");
 
   const json = await res.json();
 
@@ -24,7 +24,7 @@ const getServiceData = async (id) => {
 
   formData.append("id", id);
 
-  const res = await fetch("http://localhost/ems-platform/services/service.php", {
+  const res = await fetch("https://easyvent.iceiy.com/ems-platform/services/service.php", {
     method: "POST",
     body: formData,
   });

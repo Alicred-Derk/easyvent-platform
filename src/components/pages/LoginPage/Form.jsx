@@ -30,7 +30,11 @@ const LoginForm = ({
     formData.append("email", loginState.email);
     formData.append("password", loginState.password);
 
-    fetch("http://localhost/ems-platform/users/login.php", {
+    fetch("https://easyvent.iceiy.com/ems-platform/users/login.php", {
+      cache: "no-store",
+      headers: {
+        "Authorization": "Ok"
+      },
       method: "POST",
       body: formData,
     })

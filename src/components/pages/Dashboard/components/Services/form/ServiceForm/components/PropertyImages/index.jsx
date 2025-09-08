@@ -62,7 +62,7 @@ const PropertyImages = ({ defaultValues = [], updateFormState }) => {
     const formatted = files.map((item) => {
       if (typeof item === "string") {
 
-        return `http://localhost/ems-platform/uploads/${item}`;
+        return `https://easyvent.iceiy.com/ems-platform/uploads/${item}`;
       }
 
       if (typeof item === "object") {
