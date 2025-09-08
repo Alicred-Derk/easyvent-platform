@@ -14,7 +14,7 @@ const Slider = ({ list }) => {
       opts={{
         align: "start",
       }}
-      className="w-[100%]"
+      className="w-[100%] min-h-[12rem]"
     >
       <CarouselContent>
         {list.map((item, index) => (

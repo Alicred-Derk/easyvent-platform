@@ -7,8 +7,8 @@ import { useState } from "react";
 
 import GalleryCarousel from "../GalleryCarousel";
 
-const GalleryGrid = () => {
-  const images = [Hotel1, Hotel2, Hotel3, Hotel4, Hotel5];
+const GalleryGrid = ({ imagesUrl = []}) => {
+  const images = [...imagesUrl];
   const [selectedImage, setSelectedImage] = useState(null);
 
   return (
@@ -26,10 +26,10 @@ const GalleryGrid = () => {
             <img src={images[2]} alt="" className="w-full h-full" />
           </div>
           <div onClick={() => setSelectedImage(3)} class="overflow-hidden rounded-sm hover:shadow-2xl cursor-pointer">
-            <img src={images[3]} alt="" className="w-full h-full" />
+            {images[3] && <img src={images[3]} alt="" className="w-full h-full" />}
           </div>
           <div onClick={() => setSelectedImage(4)} class="overflow-hidden rounded-sm hover:shadow-2xl cursor-pointer">
-            <img src={images[4]} alt="" className="w-full h-full" />
+            {images[4] && <img src={images[4]} alt="" className="w-full h-full" />}
           </div>
         </div>
       </div>

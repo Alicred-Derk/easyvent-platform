@@ -16,14 +16,16 @@ import { useState } from "react";
 import { formatCurrency } from "../../../../../api/util";
 import NearByMap from "../NearyByMap";
 
-const Filters = ({ eventList, setSearchState, setMapEnabled, setNameFilter }) => {
-  const [range, setRange] = useState([2500, 13000]);
+const Filters = ({ toggleType, serviceTypes, maxPrice = 0, eventList, setSearchState, setMapEnabled, setNameFilter }) => {
+  const [range, setRange] = useState([0, maxPrice / 2]);
 
   const updateBudget = (value) => {
     setRange(value);
 
     setSearchState((prev) => ({ ...prev, budget_range: value }));
   }
+
+  console.log("Max Price", maxPrice)
 
   return (
     <div className="hidden md:block w-[35%] p-5 pl-[2rem]">
@@ -54,8 +56,8 @@ const Filters = ({ eventList, setSearchState, setMapEnabled, setNameFilter }) =>
           <Label className="font-bold text-[1rem] text-[#183B4E]">Budget Range</Label>
           <div className="py-5">
             <RangeSlider
-              min={1000}
-              max={50000}
+              min={0}
+              max={maxPrice}
               step={1}
               value={range}
               onValueChange={updateBudget}
@@ -65,37 +67,25 @@ const Filters = ({ eventList, setSearchState, setMapEnabled, setNameFilter }) =>
           </div>
 
           
-          <Label className="font-bold text-[1rem] mt-5 mb-4 text-[#183B4E]">Payment Options</Label>
+          {/* <Label className="font-bold text-[1rem] mt-5 mb-4 text-[#183B4E]">Payment Options</Label>
 
           <div className="flex gap-3 items-center mb-4">
             <Checkbox /> <Label>Free Cancellation</Label>
           </div>
           <div className="flex gap-3 items-center mb-4">
             <Checkbox /> <Label>Book Now, Pay Later</Label>
-          </div>
+          </div> */}
 
           <Label className="font-bold text-[1rem] mt-5 mb-4 text-[#183B4E]">Property Type</Label>
 
           <div className="flex gap-3 items-center mb-4">
-            <Checkbox /> <Label>Restaurant</Label>
+            <Checkbox checked={serviceTypes.includes("Hotel/Resort")} id="hotel-checkbox" onClick={() => toggleType("Hotel/Resort")} /> <Label htmlFor="hotel-checkbox">Hotels/Resorts</Label>
           </div>
           <div className="flex gap-3 items-center mb-4">
-            <Checkbox /> <Label>Resort & Spa</Label>
+            <Checkbox checked={serviceTypes.includes("Restaurant")} id="rest-checkbox" onClick={() => toggleType("Restaurant")} /> <Label htmlFor="rest-checkbox">Restaurant</Label>
           </div>
           <div className="flex gap-3 items-center mb-4">
-            <Checkbox /> <Label>Hotel with Function Hall</Label>
-          </div>
-          <div className="flex gap-3 items-center mb-4">
-            <Checkbox /> <Label>Hotel with Pool & Function Hall</Label>
-          </div>
-          <div className="flex gap-3 items-center mb-4">
-            <Checkbox /> <Label>Events Rental House with Pool</Label>
-          </div>
-
-          <Label className="font-bold text-[1rem] mt-5 mb-4 text-[#183B4E]">Property Facilities</Label>
-
-          <div className="flex gap-3 items-center mb-4">
-            <Checkbox /> <Label>No Corkage Fee</Label>
+            <Checkbox checked={serviceTypes.includes("Function Hall")} id="hall-checkbox" onClick={() => toggleType("Function Hall")} /> <Label htmlFor="hall-checkbox">Function Hall</Label>
           </div>
         </CardContent>
       </Card>

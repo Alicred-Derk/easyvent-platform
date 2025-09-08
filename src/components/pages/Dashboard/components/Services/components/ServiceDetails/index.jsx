@@ -12,7 +12,7 @@ import { Circle, Edit, Edit2, Edit3, MapPin, PhilippinePeso, Users } from "lucid
 import { formatCurrencyWithoutSymbol } from "../../../../../../../api/util";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getServiceData } from "../../utils";
+import { getServiceData } from "../../../../../../../api/services";
 
 const ServiceDetails = () => {
   const { state = {} } = useLocation();

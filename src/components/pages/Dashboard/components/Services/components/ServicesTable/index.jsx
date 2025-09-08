@@ -25,7 +25,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useNavigate } from "react-router-dom";
-import { getServiceData } from "../../utils";
+import { getServiceData } from "../../../../../../../api/services";
 
 const ServicesTable = ({ servicesList = [] }) => {
   const navigate = useNavigate();

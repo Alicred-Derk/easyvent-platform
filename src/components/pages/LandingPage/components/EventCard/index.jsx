@@ -13,18 +13,18 @@ const EventCard = ({ item }) => {
         </div>
 
         <p className="font-title text-[1.2rem] font-bold py-3">{item.name}</p>
-        <div className="text-[1rem]">Brgy. San Pedro, Puerto Princesa, Palawan</div>
+        <div className="text-[1rem]">{item.location}</div>
         <div className="flex items-center gap-3 py-3 text-orange-300">
-          <Star size={16} fill="#ffb86a" />
-          <Star size={16} fill="#ffb86a" />
-          <Star size={16} fill="#ffb86a" />
+          <Star size={16} />
+          <Star size={16} />
+          <Star size={16} />
           <Star size={16} />
           <Star size={16} />
 
-          <span className="text-black text-[0.85rem]">37 reviews</span>
+          <span className="text-black text-[0.85rem]">0 review(s)</span>
         </div>
 
-        <Button className="w-full mt-auto" onClick={() => navigate("/easyvent-platform/servicehotel")}>Book Now</Button>
+        <Button className="w-full mt-auto" onClick={() => navigate("/easyvent-platform/servicehotel", { state: { id: item.id }})}>Book Now</Button>
       </CardContent>
     </Card>
   )

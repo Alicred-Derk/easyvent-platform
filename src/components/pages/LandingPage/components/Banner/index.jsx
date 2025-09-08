@@ -16,6 +16,10 @@ const Banner = () => {
     navigate("/easyvent-platform/search");
   }
 
+  const navigateCreateAccount = () => {
+    navigate("/easyvent-platform/signup");
+  }
+
   return (
     <div className="p-10 lg:px-[10rem] relative">
       <div className="flex gap-[5rem] flex-col lg:flex-row h-[100%] w-full z-[1px] relative">
@@ -36,7 +40,7 @@ const Banner = () => {
 
           <div className="flex w-[100%] flex-col md:flex-row gap-4 mt-3">
             <Button className="font-bold text-[1.2rem] p-10 py-7" onClick={navigateSearchPage}>Search Best Match <Search /></Button>
-            <Button variant="outline" className="font-bold text-[1.2rem] p-10 py-7">Create Account <User /> </Button>
+            <Button variant="outline" onClick={navigateCreateAccount} className="font-bold text-[1.2rem] p-10 py-7">Create Account <User /> </Button>
           </div>
         </div>
         <div className="md:flex h-[100%] w-[100%] md:w-[50%] items-center pt-[1rem] pr-[1rem] justify-end hidden">

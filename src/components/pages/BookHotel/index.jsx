@@ -13,37 +13,72 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import GalleryGrid from "./components/GalleryGrid";
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import MapLocation from "./components/MapLocation";
+import { getServiceData } from "../../../api/services";
 
 const BookHotel = () => {
+  const navigate = useNavigate();
   const [mapEnabled, setMapEnabled] = useState(false);
   const { state = {} } = useLocation();
+  const [serviceState, setServiceState] = useState({});
 
-  const { name, location, rate } = state;
+  const {
+    property_name,
+    property_description,
+    location = {},
+    highlights = [],
+    amenities = [],
+    packages_list = [],
+    images_url = []
+  } = serviceState;
+
+  const { province, city, barangay, street, building_no, zip_code, geocode } = location;
+  const formattedLocation = [building_no, street, barangay, city, province].filter(Boolean).join(", ");
+
+  console.log("Event Locatin", geocode);
+
+  const urls = images_url.map((item) => `http://localhost/ems-platform/uploads/${item}`);
+
+  const initiateServiceData = async (id) => {
+    const data = await getServiceData(id);
+
+    setServiceState(data);
+  }
+
+  useEffect(() => {
+    if (!state || !state.id) {
+      navigate("easyvent-platform/");
+
+      return;
+    }
+
+    initiateServiceData(state.id);
+  }, [state])
+
   return (
     <div className="w-[100vw] h-[100vh] overflow-y-auto overflow-x-hidden relative">
       <NavigationMenu />
         <div className="py-6 px-2 md:px-[10rem]">
           <Card className="rounded-sm">
             <CardContent>
-              <GalleryGrid />
+              <GalleryGrid imagesUrl={urls} />
 
               <div className="flex gap-5">
                 <div className="flex flex-col gap-5 w-[70%]">
                   <div className="flex justify-between items-start">
                     <div className="flex flex-col gap-2">
-                      <p className="font-title font-bold text-[1.3rem] text-[#183B4E]">{name}</p>
-                      <p className="flex gap-2 items-center text-[#27548a]"><MapPin size={14} /> {location}</p>
+                      <p className="font-title font-bold text-[1.3rem] text-[#183B4E]">{property_name}</p>
+                      <p className="flex gap-2 items-center text-[#27548a]"><MapPin size={14} /> {formattedLocation} {zip_code}</p>
                     </div>
                     <div className="flex items-center">
                       <div className="flex items-center gap-2 text-orange-300">
-                        <Star size={20} fill={rate >= 1 ? "#ffb86a" : "transparent"} />
-                        <Star size={20} fill={rate >= 2 ? "#ffb86a" : "transparent"} />
-                        <Star size={20} fill={rate >= 3 ? "#ffb86a" : "transparent"} />
-                        <Star size={20} fill={rate >= 4 ? "#ffb86a" : "transparent"} />
-                        <Star size={20} fill={rate === 5 ? "#ffb86a" : "transparent"} />
+                        <Star size={20} />
+                        <Star size={20} />
+                        <Star size={20} />
+                        <Star size={20} />
+                        <Star size={20} />
                       </div>
                       <Button variant="outline" className="rounded-full w-[2.3rem] h-[2.3rem] ml-5">
                         <Heart />
@@ -52,7 +87,7 @@ const BookHotel = () => {
                   </div>
 
                   <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                    {property_description}
                   </p>
 
                   <Card className="py-4">
@@ -62,97 +97,16 @@ const BookHotel = () => {
                       </p>
 
                       <ul>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              <span className="text-[#183B4E] font-bold">Award winning MICE Venue</span> -
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              <span className="text-[#183B4E] font-bold">Hari Ballroom</span> -
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              <span className="text-[#183B4E] font-bold">Reyna Function Hall</span> -
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              <span className="text-[#183B4E] font-bold">Chapel & Outdoor Venues</span> -
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              <span className="text-[#183B4E] font-bold">Comprehensive Event Support</span> -
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-
-                            </p>
-                          </div>
-                        </li>
-                      </ul>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardContent>
-                      <p className="font-title text-[#183B4E] text-[1rem] font-semibold mb-5">
-                        Experience Highlights
-                      </p>
-
-                      <ul>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              <span className="text-[#183B4E] font-bold">Environmentally sustainable</span> -
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              <span className="text-[#183B4E] font-bold">Family-friendly</span> -
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              <span className="text-[#183B4E] font-bold">Culinary variety</span> -
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-
-                            </p>
-                          </div>
-                        </li>
+                        {highlights.map((item) => (
+                          <li key={item.title}>
+                            <div className="flex items gap-2 py-2">
+                              <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
+                              <p>
+                                <span className="text-[#183B4E] font-bold">{item.title}</span> - {item.description}
+                              </p>
+                            </div>
+                          </li>
+                        ))}
                       </ul>
                     </CardContent>
                   </Card>
@@ -160,7 +114,7 @@ const BookHotel = () => {
 
                 <div className="w-[30%]">
                   <div className="relative mb-5 h-[12rem] shadow-md border-1 rounded-sm overflow-hidden">
-                    <MapLocation name={name} geocode={state.geocode} zoom={15} />
+                    {geocode && <MapLocation name={property_name} rate={0} geocode={geocode} zoom={13} />}
 
                     <div onClick={() => setMapEnabled(true)} className="opacity-0 cursor-pointer hover:opacity-100 absolute top-0 left-0 w-full h-full z-[1000] bg-[#000000AA] text-white flex items-center justify-center">
                       View Location on Map
@@ -173,46 +127,16 @@ const BookHotel = () => {
                       </p>
                       <p>Included accross venues: </p>
                       <ul>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              Professional event coordination (including weddings) <u>(femalenetwork.com)</u>
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              State-of-the-art AV and sound systems
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              On-site catering by the resort <u>(event.com)</u>
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              Free airport shuttle, business services, Wi-Fi, parking <u>(cvent.com)</u>
-                            </p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="flex items gap-2 py-2">
-                            <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
-                            <p>
-                              Access to resort facilities including spa, pool, mini waterpark, chapel, sandbar, and game area
-                            </p>
-                          </div>
-                        </li>
+                        {amenities.map((item) => (
+                          <li key={item}>
+                            <div className="flex items gap-2 py-2">
+                              <div className="pt-[0.4rem]"><Circle fill="#183B4E" size={10} stroke={0} /></div>
+                              <p>
+                                {item}
+                              </p>
+                            </div>
+                          </li>
+                        ))}
                       </ul>
                     </CardContent>
                   </Card>
@@ -283,7 +207,7 @@ const BookHotel = () => {
       {mapEnabled && (
         <div onClick={() => setMapEnabled(false)} className="fixed top-0 left-0 w-[100vw] h-[100vh] px-[10rem] py-10 bg-[#000000AA] backdrop-blur-xs z-[1000]">
           <div onClick={(event) => event.stopPropagation()} className="h-full">
-            <MapLocation name={name} rate={rate} geocode={state.geocode} zoom={13} />
+            <MapLocation name={property_name} rate={0} geocode={geocode} zoom={13} />
           </div>
         </div>)}
     </div>

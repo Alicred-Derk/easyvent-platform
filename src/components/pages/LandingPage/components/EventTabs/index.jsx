@@ -16,19 +16,18 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const EventTabs = () => {
+const EventTabs = ({ updateEventTab }) => {
   return (
     <div className="p-2 md:p-10">
       <Card className="py-2">
         <CardContent className="px-3 text-center">
           <div className="flex items-center">
             <div className="md:flex items-center-safe justify-around w-[95%] hidden">
-              <Button variant="link" className="text-[1rem]"><Columns /> Show All</Button>
-              <Button variant="link" className="text-[1rem]"><Hotel /> Hotels</Button>
-              <Button variant="link" className="text-[1rem]"><Utensils /> Restaurants</Button>
-              <Button variant="link" className="text-[1rem]"><TreePalm /> Resort Spas</Button>
-              <Button variant="link" className="text-[1rem]"><Landmark /> Function Halls</Button>
-              <Button variant="link" className="text-[1rem]"><Users /> Service Providers</Button>
+              <Button onClick={() => updateEventTab("")} variant="link" className="text-[1rem]"><Columns /> Show All</Button>
+              <Button onClick={() => updateEventTab("hotels")} variant="link" className="text-[1rem]"><Hotel /> Hotels/Resorts</Button>
+              <Button onClick={() => updateEventTab("restaurants")} variant="link" className="text-[1rem]"><Utensils /> Restaurants</Button>
+              <Button onClick={() => updateEventTab("functionHalls")} variant="link" className="text-[1rem]"><Landmark /> Function Halls</Button>
+              <Button onClick={() => updateEventTab("serviceProviders")} variant="link" className="text-[1rem]"><Users /> Service Providers</Button>
             </div>
 
             <div className="md:hidden">

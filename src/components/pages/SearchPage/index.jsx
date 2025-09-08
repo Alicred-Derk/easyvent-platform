@@ -17,66 +17,11 @@ import Res5 from "@/assets/images/res_5.jpg";
 import { Banknote, ChevronsUpDown } from "lucide-react";
 import Filters from "./components/Filters";
 import SearchSection from "./components/SearchSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NearByMap from "./components/NearyByMap";
+import { getPublishedServices } from "../../../api/services";
 
 const getTime = (date) => (new Date(date)).getTime();
-
-const hotels = [
-  {
-    name: "Hue Hotels and Resorts Puerto Princesa",
-    image: Hotel1,
-    liked: true,
-    location: "Brgy. San Pedro, Puerto Princesa, Palawan",
-    price: 4500,
-    rate: 4,
-    pax: 10,
-    date_availability: ["2025-09-10", "2025-09-15"],
-    geocode: [9.7654703,118.7454311],
-  },
-  {
-    name: "Pricesa Garden Island resort & Spa",
-    image: Hotel2,
-    liked: true,
-    location: "Brgy. Sta Monica, Puerto Princesa, Palawan",
-    price: 8500,
-    rate: 2,
-    pax: 15,
-    date_availability: ["2025-09-05", "2025-09-10"],
-    geocode: [9.7955289,118.7341833],
-  },
-  {
-    name: "Citystate Asturias Hotel Palawan",
-    image: Hotel3,
-    location: "Brgy. Lio, El Nido, Palawan",
-    price: 4000,
-    rate: 5,
-    pax: 5,
-    date_availability: ["2025-09-23", "2025-09-29"],
-    geocode: [11.1739928,119.4205109],
-  },
-  {
-    name: "Ponce De Leon Garden Resort",
-    image: Hotel4,
-    location: "Brgy. Mangingisda, Puerto Princesa, Palawan",
-    price: 40500,
-    rate: 5,
-    pax: 65,
-    date_availability: ["2025-09-13", "2025-09-15"],
-    geocode: [9.6796805,118.7510964],
-  },
-  {
-    name: "Ivy Wall Hotel",
-    image: Hotel5,
-    liked: true,
-    price: 2000,
-    location: "Brgy. Sicsican, Puerto Princesa, Palawan",
-    rate: 3,
-    pax: 5,
-    date_availability: ["2025-10-05", "2025-09-28"],
-    geocode: [9.794839,118.7132215],
-  },
-];
 
 const filterList = (list, searchState) => {
   const filteredList = [];
@@ -140,13 +85,64 @@ const SearchPage = () => {
     time: "",
     pax: ""
   });
+  const [serviceTypes, setServiceTypes] = useState(["Hotel/Resort", "Restaurant", "Function Hall"]);
+
+  const [servicesState, setServicesState] = useState([]);
+  const maxPrices = [50000];
+
+  const mappedServices = servicesState.map((item) => {
+    const { property_name, images_url = [], packages_list = [], location = {}  } = item;
+    const { geocode, province, city, barangay, street, building_no, zip_code } = location;
+
+    const formattedLoc = [building_no, street, barangay, city, province].filter(Boolean).join(", ");
+
+    const prices = packages_list.map((item) => item.price);
+    const pax = packages_list.map((item) => item.no_guest);
+
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const paxMin = Math.min(...pax);
+    const paxMax = Math.max(...pax);
+    maxPrices.push(maxPrice);
+
+    return ({
+      name: property_name,
+      image: `http://localhost/ems-platform/uploads/${images_url[0]}`,
+      price: minPrice,
+      location: `${formattedLoc} ${zip_code}`,
+      rate: 0,
+      pax: paxMin,
+      paxMax,
+      date_availability: [],
+      geocode,
+      id: item.id,
+      minPrice,
+      maxPrice,
+      category: item.category,
+    });
+  });
+
+  const toggleType = (type) => {
+    setServiceTypes((prev) => prev.includes(type) ? prev.filter(item => item !== type) : [...prev, type]);
+  }
+
+  const initiateServices = async () => {
+    const list = await getPublishedServices();
+    setServicesState(list);
+  }
+
+  useEffect(() => {
+    initiateServices();
+  }, []);
 
   const [sortBy, setSortBy] = useState("");
   const [nameFilter, setNameFilter] = useState("");
 
   const [mapEnabled, setMapEnabled] = useState();
 
-  const filteredList = filterList(hotels, searchState).filter(item => item.name.toLowerCase().includes(nameFilter.toLowerCase()));
+  const filteredList = filterList(mappedServices, searchState)
+    .filter((item) => serviceTypes.includes(item.category))
+    .filter(item => item.name.toLowerCase().includes(nameFilter.toLowerCase()));
 
   const sortedList = sortBy ? sortList(filteredList, sortBy) : filteredList;
 
@@ -155,10 +151,10 @@ const SearchPage = () => {
       <NavigationMenu />
       
       <SearchSection setSearchState={setSearchState} sortBy={sortBy} setSortBy={setSortBy} />
-      <div className="flex gap-[2rem] px-2 md:px-[10rem]">
+      <div className="flex gap-[1rem] px-2 md:px-[10rem]">
         <EventCards list={[...sortedList]} />
 
-        <Filters setNameFilter={setNameFilter} setMapEnabled={setMapEnabled} eventList={sortedList} setSearchState={setSearchState} />
+        <Filters toggleType={toggleType} serviceTypes={serviceTypes} maxPrice={Math.max(...maxPrices)} setNameFilter={setNameFilter} setMapEnabled={setMapEnabled} eventList={sortedList} setSearchState={setSearchState} />
       </div>
       <FooterSection />
 

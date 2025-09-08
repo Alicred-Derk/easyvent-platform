@@ -15,70 +15,74 @@ import Res3 from "@/assets/images/res_3.png";
 import Res4 from "@/assets/images/res_4.jpg";
 import Res5 from "@/assets/images/res_5.jpg";
 import { Banknote, ChevronsUpDown } from "lucide-react";
-
-const hotels = [
-  {
-    name: "Hue Hotels and Resorts Puerto Princesa",
-    image: Hotel1,
-  },
-  {
-    name: "Pricesa Garden Island resort & Spa",
-    image: Hotel2,
-  },
-  {
-    name: "Citystate Asturias Hotel Palawan",
-    image: Hotel3,
-  },
-  {
-    name: "Ponce De Leon Garden Resort",
-    image: Hotel4,
-  },
-  {
-    name: "Ivy Wall Hotel",
-    image: Hotel5,
-  },
-];
-
-const restaurants = [
-  {
-    name: "La Terrasse Cafe",
-    image: Res1,
-  },
-  {
-    name: "Badjao Seafront",
-    image: Res2,
-  },
-  {
-    name: "Kalui Restaurant",
-    image: Res3,
-  },
-  {
-    name: "Mc Donald's Palawan Junction",
-    image: Res4,
-  },
-  {
-    name: "Tong Yang",
-    image: Res5,
-  },
-]
+import { useMemo, useState } from "react";
 
 
-const Events = () => {
+const Events = ({ services = [] }) => {
+  const [selectedTab, setSelectedTab] = useState("");
+
+  const { hotels = [], restaurants = [], functionHalls = [] } = useMemo(() => {
+    const hotelServc = [];
+    const restServc = [];
+    const funcServc = [];
+
+    services.forEach((service) => {
+      const { location, property_name, images_url, category, id } = service;
+
+      const { province, city, barangay, street, zip_code } = location;
+      const serviceObj = {
+        id,
+        name: property_name,
+        location: `${[street, barangay, city, province].filter(Boolean).join(", ")} ${zip_code}`,
+        image: `http://localhost/ems-platform/uploads/${images_url[0]}`
+      };
+
+      if (category === "Hotel/Resort") {
+        hotelServc.push(serviceObj);
+      }
+
+      if (category === "Restaurant") {
+        restServc.push(serviceObj);
+      }
+
+      if (category === "Function Hall") {
+        funcServc.push(serviceObj);
+      }
+    })
+
+    return { hotels: hotelServc, restaurants: restServc, functionHalls: funcServc };
+  }, [services])
   return (
     <div className="px-[1rem] md:px-[10rem]">
-      <EventTabs />
+      <EventTabs updateEventTab={setSelectedTab} />
 
-      <div className="flex justify-between items-center pb-4 pt-5 px-3">
-        <p className="font-title font-bold text-[1.3rem]">Hotels</p>
-        <div className="flex items-center gap-2">
+      <div className="relative">
+        <div className="flex items-center gap-2 absolute top-5 right-0">
           <Button variant="outline"><Banknote /> Price</Button>
           <Button variant="outline"><ChevronsUpDown /> Sort By</Button>
         </div>
-      </div>
-      <Slider list={hotels} />
 
-      <p className="font-title font-bold text-[1.3rem] pb-4 pt-5 px-3">Restaurants</p>
-      <Slider list={restaurants} />
+        {(!selectedTab || selectedTab === "hotels") && (
+          <>
+            <p className="font-title font-bold text-[1.3rem] pb-4 pt-5 px-3">Hotels/Resorts</p>
+            <Slider list={hotels} />
+          </>
+        )}
+
+        {(!selectedTab || selectedTab === "restaurants") && (
+          <>
+            <p className="font-title font-bold text-[1.3rem] pb-4 pt-5 px-3">Restaurants</p>
+            <Slider list={restaurants} />
+          </>
+        )}
+
+        {(!selectedTab || selectedTab === "functionHalls") && (
+          <>
+            <p className="font-title font-bold text-[1.3rem] pb-4 pt-5 px-3">Function Halls</p>
+            <Slider list={functionHalls} />
+          </>
+        )}
+      </div>
     </div>
   )
 };
