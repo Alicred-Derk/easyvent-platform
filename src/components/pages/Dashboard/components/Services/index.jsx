@@ -240,7 +240,7 @@ const Services = () => {
       formData.append("category", categoryParams);
     }
 
-    fetch("https://easyvent.iceiy.com/ems-platform/services/fetchByProvider.php", {
+    fetch(`${import.meta.env.VITE_API_URL}/services/fetchByProvider.php`, {
       method: "POST",
       body: formData,
     })

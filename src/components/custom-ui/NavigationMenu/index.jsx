@@ -7,6 +7,8 @@ const NavigationMenu = () => {
 
   const navigateLogin = () => navigate("/login");
 
+  const navigateDashboard = () => navigate("/dashboard/");
+
   const userData = localStorage.getItem("user-data");
 
   return (
@@ -31,6 +33,7 @@ const NavigationMenu = () => {
         </div>
 
         {!userData && <Button className="bg-[#183B4E] hover:bg-[#2e5e78]" onClick={navigateLogin}>Log In <LogIn /> </Button>}
+        {userData && <Button className="bg-[#183B4E] hover:bg-[#2e5e78]" onClick={navigateDashboard}>Dashboard </Button>}
       </div>
     </div>
   )

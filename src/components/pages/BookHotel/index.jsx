@@ -37,9 +37,7 @@ const BookHotel = () => {
   const { province, city, barangay, street, building_no, zip_code, geocode } = location;
   const formattedLocation = [building_no, street, barangay, city, province].filter(Boolean).join(", ");
 
-  console.log("Event Locatin", geocode);
-
-  const urls = images_url.map((item) => `https://easyvent.iceiy.com/ems-platform/uploads/${item}`);
+  const urls = images_url.map((item) => `${import.meta.env.VITE_API_URL}/uploads/${item}`);
 
   const initiateServiceData = async (id) => {
     const data = await getServiceData(id);

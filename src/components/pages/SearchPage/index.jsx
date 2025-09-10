@@ -94,7 +94,7 @@ const SearchPage = () => {
 
     return ({
       name: property_name,
-      image: `https://easyvent.iceiy.com/ems-platform/uploads/${images_url[0]}`,
+      image: `${import.meta.env.VITE_API_URL}/uploads/${images_url[0]}`,
       price: minPrice,
       location: `${formattedLoc} ${zip_code}`,
       rate: 0,

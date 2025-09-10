@@ -30,7 +30,7 @@ const LoginForm = ({
     formData.append("email", loginState.email);
     formData.append("password", loginState.password);
 
-    fetch("https://easyvent.iceiy.com/ems-platform/users/login.php", {
+    fetch(`${import.meta.env.VITE_API_URL}/users/login.php`, {
       cache: "no-store",
       headers: {
         "Authorization": "Ok"

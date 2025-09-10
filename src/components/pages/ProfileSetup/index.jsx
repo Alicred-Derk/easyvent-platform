@@ -27,7 +27,7 @@ const ProfileSetup = () => {
 
     if (file) formData.append("file", file);
 
-    fetch("https://easyvent.iceiy.com/ems-platform/users/update.php", {
+    fetch(`${import.meta.env.VITE_API_URL}/users/update.php`, {
       method: "POST",
       body: formData,
     })

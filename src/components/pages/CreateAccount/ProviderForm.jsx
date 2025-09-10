@@ -39,7 +39,7 @@ const ProviderForm = () => {
     form.append("password", password);
     form.append("role", "Provider");
 
-    fetch("https://easyvent.iceiy.com/ems-platform/users/create.php", {
+    fetch(`${import.meta.env.VITE_API_URL}/users/create.php`, {
       method: "POST",
       body: form,
     })

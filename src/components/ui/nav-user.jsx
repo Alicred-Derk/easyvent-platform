@@ -45,7 +45,7 @@ export function NavUser({
   const fallbackName = [personal_name[0], last_name[0]].filter(Boolean).join("");
   const userName = [personal_name, last_name].filter(Boolean).join("");
 
-  const userImage = display_picture ? `https://easyvent.iceiy.com/ems-platform/uploads/${display_picture}` : "";
+  const userImage = display_picture ? `${import.meta.env.VITE_API_URL}/uploads/${display_picture}` : "";
 
   const handleLogout = () => {
     localStorage.removeItem("user-data");

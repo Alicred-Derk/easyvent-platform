@@ -51,7 +51,7 @@ const ServiceForm = () => {
 
       files.forEach((file) => uploadForm.append("images[]", file))
 
-      const res = await fetch('https://easyvent.iceiy.com/ems-platform/services/upload_images.php', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/services/upload_images.php`, {
         method: 'POST',
         body: uploadForm,
       });
@@ -87,7 +87,7 @@ const ServiceForm = () => {
     setIsLoading(true);
     const formData = await setupFormData(status);
 
-    const res = await fetch('https://easyvent.iceiy.com/ems-platform/services/create.php', {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/services/create.php`, {
       method: 'POST',
       body: formData,
     });
@@ -108,7 +108,7 @@ const ServiceForm = () => {
     setIsLoading(true);
     const formData = await setupFormData(status);
     
-    const res = await fetch('https://easyvent.iceiy.com/ems-platform/services/update.php', {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/services/update.php`, {
       method: 'POST',
       body: formData,
     });
