@@ -61,6 +61,8 @@ const ProfileForm = ({ isCreating, defaultValues = {}, onSubmit, isLoading }) =>
   const fileImage = useMemo(() => {
     if (!file) return null;
 
+    console.log("File", file);
+
     return URL.createObjectURL(file);
   }, [file]);
 
@@ -68,6 +70,8 @@ const ProfileForm = ({ isCreating, defaultValues = {}, onSubmit, isLoading }) =>
     event.preventDefault();
     if (onSubmit) onSubmit(profileState);
   }
+
+  console.log("Image data", fileImage ? fileImage : display_picture ? `${import.meta.env.VITE_API_URL}/uploads/${display_picture}` : "https://github.com/shadcn.png");
 
   
   return (
@@ -82,7 +86,7 @@ const ProfileForm = ({ isCreating, defaultValues = {}, onSubmit, isLoading }) =>
 
             <div className="w-[75%] flex items-center gap-[1rem]">
               <Avatar className="w-[5rem] h-[5rem]">
-                <AvatarImage src={fileImage ? fileImage : display_picture ?? "https://github.com/shadcn.png"} />
+                <AvatarImage src={fileImage ? fileImage : display_picture ? `${import.meta.env.VITE_API_URL}/uploads/${display_picture}` : "https://github.com/shadcn.png"} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
 

@@ -48,7 +48,12 @@ const LoginForm = ({
         }
 
         if (data) {
-          localStorage.setItem("user-data", JSON.stringify({ ...data ?? {} }));
+          const parsedData = {
+            ...data,
+            contacts: JSON.parse(data.contacts ?? "[]"),
+          };
+
+          localStorage.setItem("user-data", JSON.stringify({ ...parsedData }));
           const { personal_name, last_name } = data;
 
           if (!personal_name && !last_name) {
