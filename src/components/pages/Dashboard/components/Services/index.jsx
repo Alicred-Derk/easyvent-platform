@@ -35,7 +35,7 @@ const CategorySelection = () => {
   const navigate = useNavigate();
 
   const navigateForm = (category) => {
-    navigate("/easyvent-platform/dashboard/services/form", { state: { category }})
+    navigate("/dashboard/services/form", { state: { category }})
   }
 
   return (

@@ -49,11 +49,11 @@ export function NavUser({
 
   const handleLogout = () => {
     localStorage.removeItem("user-data");
-    navigate("/easyvent-platform/");
+    navigate("/");
   }
 
   const navigateProfile = () => {
-    navigate("/easyvent-platform/dashboard/profile");
+    navigate("/dashboard/profile");
   }
 
   return (

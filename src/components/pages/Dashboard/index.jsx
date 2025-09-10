@@ -25,7 +25,7 @@ const Dashboard = () => {
     const userData = localStorage.getItem("user-data");
 
     if (!userData) {
-      navigate("/easyvent-platform/");
+      navigate("/");
 
       return;
     }

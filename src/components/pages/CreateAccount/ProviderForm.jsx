@@ -58,7 +58,7 @@ const ProviderForm = () => {
         if (data) {
           const { id } = data;
 
-          navigate("/easyvent-platform/signup/profile", { state: { id, email }})
+          navigate("/signup/profile", { state: { id, email }})
         }
       });
   }

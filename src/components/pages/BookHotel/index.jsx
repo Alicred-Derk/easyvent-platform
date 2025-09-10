@@ -49,7 +49,7 @@ const BookHotel = () => {
 
   useEffect(() => {
     if (!state || !state.id) {
-      navigate("easyvent-platform/");
+      navigate("/");
 
       return;
     }

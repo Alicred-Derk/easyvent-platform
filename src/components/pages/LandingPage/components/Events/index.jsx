@@ -2,18 +2,6 @@ import EventTabs from "../EventTabs";
 
 import { Button } from "@/components/ui/button";
 import Slider from "../Slider";
-
-import Hotel1 from "@/assets/images/hotel_1.jpg";
-import Hotel2 from "@/assets/images/hotel_2.jpg";
-import Hotel3 from "@/assets/images/hotel_3.jpeg";
-import Hotel4 from "@/assets/images/hotel_4.jpg";
-import Hotel5 from "@/assets/images/hotel_5.jpg";
-
-import Res1 from "@/assets/images/res_1.jpg";
-import Res2 from "@/assets/images/res_2.jpg";
-import Res3 from "@/assets/images/res_3.png";
-import Res4 from "@/assets/images/res_4.jpg";
-import Res5 from "@/assets/images/res_5.jpg";
 import { Banknote, ChevronsUpDown } from "lucide-react";
 import { useMemo, useState } from "react";
 

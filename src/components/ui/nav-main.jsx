@@ -37,7 +37,7 @@ export function NavMain({
           >
             <SidebarMenuItem>
                 <SidebarMenuButton tooltip={item.title} onClick={() => {
-                  navigate(`/easyvent-platform/dashboard/${item.url}`)
+                  navigate(`/dashboard/${item.url}`)
                 }}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>

@@ -24,7 +24,7 @@ const EventCard = ({ item }) => {
           <span className="text-black text-[0.85rem]">0 review(s)</span>
         </div>
 
-        <Button className="w-full mt-auto" onClick={() => navigate("/easyvent-platform/servicehotel", { state: { id: item.id }})}>Book Now</Button>
+        <Button className="w-full mt-auto" onClick={() => navigate("/servicehotel", { state: { id: item.id }})}>Book Now</Button>
       </CardContent>
     </Card>
   )

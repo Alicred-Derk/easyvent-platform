@@ -47,7 +47,7 @@ const ProfileSetup = () => {
 
           localStorage.setItem("user-data", JSON.stringify({ ...formValues, display: data.display_picture ?? ""}));
 
-          navigate("/easyvent-platform/dashboard");
+          navigate("/dashboard");
         }
       })
   }

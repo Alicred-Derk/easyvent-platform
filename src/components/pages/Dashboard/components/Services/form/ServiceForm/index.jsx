@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const ServiceForm = () => {
   const navigate = useNavigate();
   const [formState, setFormState] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const { state = {} } = useLocation();
   const { id, status, category, property_details = {}, images_url = [], highlights = [], location = {}, amenities = [], packages_list = [] } = formState;
 
@@ -83,6 +84,7 @@ const ServiceForm = () => {
   }
 
   const createService = async (status) => {
+    setIsLoading(true);
     const formData = await setupFormData(status);
 
     const res = await fetch('https://easyvent.iceiy.com/ems-platform/services/create.php', {
@@ -97,12 +99,13 @@ const ServiceForm = () => {
     }
 
     if (json.data) {
-      navigate("/easyvent-platform/dashboard/services/details", { state: { id: json.data.id }})
+      navigate("/dashboard/services/details", { state: { id: json.data.id }})
     }
     
   }
 
   const updateService = async (status) => {
+    setIsLoading(true);
     const formData = await setupFormData(status);
     
     const res = await fetch('https://easyvent.iceiy.com/ems-platform/services/update.php', {
@@ -117,7 +120,7 @@ const ServiceForm = () => {
     }
 
     if (json.data) {
-      navigate("/easyvent-platform/dashboard/services/details", { state: { id: json.data.id }})
+      navigate("/dashboard/services/details", { state: { id: json.data.id }})
     }
   };
 
@@ -155,9 +158,9 @@ const ServiceForm = () => {
         </p>
 
         <div className="flex gap-2 items-center">
-          {(!id || status === "Draft") && <Button variant="outline" type="button" onClick={handleDraft}>Save as Draft</Button>}
-          {status === "Published" && <Button variant="outline" type="button" onClick={handleDeactivate}>Deactivate</Button>}
-          <Button type="button" className="bg-[#183B4E] hover:bg-[#2e5e78]" onClick={handlePublish}>Publish Service</Button>
+          {(!id || status === "Draft") && <Button disabled={isLoading} variant="outline" type="button" onClick={handleDraft}>Save as Draft</Button>}
+          {status === "Published" && <Button disabled={isLoading} variant="outline" type="button" onClick={handleDeactivate}>Deactivate</Button>}
+          <Button disabled={isLoading} type="button" className="bg-[#183B4E] hover:bg-[#2e5e78]" onClick={handlePublish}>Publish Service</Button>
         </div>
       </div>
 

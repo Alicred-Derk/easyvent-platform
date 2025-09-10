@@ -30,13 +30,13 @@ import { getServiceData } from "../../../../../../../api/services";
 const ServicesTable = ({ servicesList = [] }) => {
   const navigate = useNavigate();
   const openService = (id) => {
-    navigate("/easyvent-platform/dashboard/services/details", { state: { id } });
+    navigate("/dashboard/services/details", { state: { id } });
   }
 
   const editService = async (id) => {
     const data = await getServiceData(id);
 
-    navigate("/easyvent-platform/dashboard/services/form", { state: { ...data } });
+    navigate("/dashboard/services/form", { state: { ...data } });
   }
 
   return (
@@ -56,7 +56,7 @@ const ServicesTable = ({ servicesList = [] }) => {
           <TableBody>
             {servicesList.map((service) => (
               <TableRow key={service.invoice}>
-                <TableCell className="font-medium px-5 py-2">Servc{service.id.padStart(4, "0")}</TableCell>
+                <TableCell className="font-medium px-5 py-2">Servc{service.id.toString().padStart(4, "0")}</TableCell>
                 <TableCell>
                   <div className="w-[90%] overflow-hidden text-ellipsis">
                     {service.property_name}

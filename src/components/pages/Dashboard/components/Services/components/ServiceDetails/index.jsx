@@ -43,12 +43,12 @@ const ServiceDetails = () => {
   }
 
   const editService = () => {
-    navigate("/easyvent-platform/dashboard/services/form", { state: { ...serviceState }});
+    navigate("/dashboard/services/form", { state: { ...serviceState }});
   };
 
   useEffect(() => {
     if (!state?.id) {
-      navigate("/easyvent-platform/dashboard/services");
+      navigate("/dashboard/services");
       return;
     }
 

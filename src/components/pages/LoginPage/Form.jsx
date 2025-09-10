@@ -15,7 +15,7 @@ const LoginForm = ({
   const [loginState, setLoginState] = useState({});
 
   const navigateSignup = () => {
-    navigate("/easyvent-platform/signup");
+    navigate("/signup");
   };
 
   const updateLoginState = (event, fieldName) => {
@@ -57,11 +57,11 @@ const LoginForm = ({
 
             const tomorrow = todayDate.getTime();
 
-            navigate("/easyvent-platform/signup/profile", { state: { id: data.id, email: data.email, expiration: tomorrow } });
+            navigate("/signup/profile", { state: { id: data.id, email: data.email, expiration: tomorrow } });
             return;
           }
 
-          navigate("/easyvent-platform/dashboard");
+          navigate("/dashboard");
         }
       })
   }

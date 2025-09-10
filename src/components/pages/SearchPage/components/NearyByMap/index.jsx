@@ -45,7 +45,7 @@ const NearByMap = ({ eventList = [], zoom = 12 }) => {
                   <Star size={20} fill={item.rate === 5 ? "#ffb86a" : "transparent"} />
                 </div>
 
-                <Button onClick={() => navigate("/easyvent-platform/servicehotel", { state: item })} className="bg-[#183B4E]">View Details</Button>
+                <Button onClick={() => navigate("/servicehotel", { state: item })} className="bg-[#183B4E]">View Details</Button>
               </div>
             </Popup>
           </Marker>

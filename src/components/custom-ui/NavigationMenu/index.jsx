@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const NavigationMenu = () => {
   const navigate = useNavigate();
 
-  const navigateLogin = () => navigate("/easyvent-platform/login");
+  const navigateLogin = () => navigate("/login");
 
   const userData = localStorage.getItem("user-data");
 
@@ -15,7 +15,7 @@ const NavigationMenu = () => {
 
       <div className="flex gap-3">
         <div className="md:flex gap-2 items-center-safe hidden">
-          <Button variant="ghost" onClick={() => navigate("/easyvent-platform")}>Home</Button>
+          <Button variant="ghost" onClick={() => navigate("/")}>Home</Button>
           
           <Button variant="ghost">About</Button>
           

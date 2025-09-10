@@ -1,8 +1,3 @@
-import Hotel1 from "@/assets/images/hotel_1.jpg";
-import Hotel2 from "@/assets/images/hotel_2.jpg";
-import Hotel3 from "@/assets/images/hotel_3.jpeg";
-import Hotel4 from "@/assets/images/hotel_4.jpg";
-import Hotel5 from "@/assets/images/hotel_5.jpg";
 import { useState } from "react";
 
 import GalleryCarousel from "../GalleryCarousel";

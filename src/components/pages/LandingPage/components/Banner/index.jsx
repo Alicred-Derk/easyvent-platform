@@ -13,11 +13,11 @@ const Banner = () => {
   const navigate = useNavigate();
 
   const navigateSearchPage = () => {
-    navigate("/easyvent-platform/search");
+    navigate("/search");
   }
 
   const navigateCreateAccount = () => {
-    navigate("/easyvent-platform/signup");
+    navigate("/signup");
   }
 
   return (
