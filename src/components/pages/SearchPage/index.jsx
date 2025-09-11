@@ -146,7 +146,7 @@ const SearchPage = () => {
       <FooterSection />
 
       {mapEnabled && (
-        <div onClick={() => setMapEnabled(false)} className="fixed top-0 left-0 w-[100vw] h-[100vh] px-[10rem] py-10 bg-[#000000AA] backdrop-blur-xs z-[1000]">
+        <div onClick={() => setMapEnabled(false)} className="fixed top-0 left-0 w-[100vw] h-[100vh] px-[10rem] py-10 bg-[#000000AA] backdrop-blur-xs z-[10]">
           <div onClick={(event) => event.stopPropagation()} className="h-full">
             <NearByMap eventList={sortedList} />
           </div>

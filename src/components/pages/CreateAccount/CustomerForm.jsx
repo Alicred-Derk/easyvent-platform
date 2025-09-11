@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button"
 
 import { toast } from "sonner"
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CustomerForm = () => {
+  const { state = {} } = useLocation();
   const [userState, setUserState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -57,7 +58,7 @@ const CustomerForm = () => {
         if (data) {
           const { id } = data;
 
-          navigate("/signup/profile", { state: { id, email }})
+          navigate("/signup/profile", { state: { id, email, redirect: state?.redirect }});
         }
       });
   }

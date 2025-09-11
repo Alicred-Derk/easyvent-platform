@@ -41,11 +41,16 @@ const ProfileSetup = () => {
         }
 
         if (data) {
+          localStorage.setItem("user-data", JSON.stringify({ ...formValues, display: data.display_picture ?? ""}));
+
+          if (state && state.redirect) {
+            navigate(state.redirect.page, { state: state.redirect.state });
+            return;
+          }
+
           toast(data.title, {
             description: data.message,
           });
-
-          localStorage.setItem("user-data", JSON.stringify({ ...formValues, display: data.display_picture ?? ""}));
 
           navigate("/dashboard");
         }

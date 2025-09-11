@@ -42,7 +42,7 @@ const Filters = ({ toggleType, serviceTypes, maxPrice = 0, eventList, setSearchS
       <div className="relative mb-5 h-[12rem] shadow-md border-1 rounded-sm overflow-hidden">
         <NearByMap eventList={eventList} zoom={12} />
 
-        <div onClick={() => setMapEnabled(true)} className="opacity-0 cursor-pointer hover:opacity-100 absolute top-0 left-0 w-full h-full z-[1000] bg-[#000000AA] text-white flex items-center justify-center">
+        <div onClick={() => setMapEnabled(true)} className="opacity-0 cursor-pointer hover:opacity-100 absolute top-0 left-0 w-full h-full z-[5] bg-[#000000AA] text-white flex items-center justify-center">
           View Nearby Place
         </div>
       </div>

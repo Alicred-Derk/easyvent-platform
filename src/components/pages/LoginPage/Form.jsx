@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useNavigate } from "react-router-dom"
+import { redirect, useLocation, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -11,11 +11,12 @@ const LoginForm = ({
   className,
   ...props
 }) => {
+  const { state = {} } = useLocation();
   const navigate = useNavigate();
   const [loginState, setLoginState] = useState({});
 
   const navigateSignup = () => {
-    navigate("/signup");
+    navigate("/signup", { state: { redirect: state?.redirect }});
   };
 
   const updateLoginState = (event, fieldName) => {
@@ -62,7 +63,12 @@ const LoginForm = ({
 
             const tomorrow = todayDate.getTime();
 
-            navigate("/signup/profile", { state: { id: data.id, email: data.email, expiration: tomorrow } });
+            navigate("/signup/profile", { state: { id: data.id, email: data.email, expiration: tomorrow, redirect: state?.redirect } });
+            return;
+          }
+
+          if (state && state.redirect) {
+            navigate(state.redirect.page, { state: state.redirect.state });
             return;
           }
 

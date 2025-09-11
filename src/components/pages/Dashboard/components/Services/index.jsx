@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Building2, CalendarPlus, CirclePlus, Ellipsis, Funnel, HandPlatter, Landmark, Plus, Search, SlidersHorizontal, Star } from "lucide-react";
+import { Building2, CalendarPlus, CirclePlus, Ellipsis, Funnel, HandPlatter, Landmark, Plus, Search, SlidersHorizontal, Star, Users } from "lucide-react";
 import ServicesTable from "./components/ServicesTable";
 import { useEffect, useState } from "react";
 
@@ -89,6 +89,23 @@ const CategorySelection = () => {
               </div>
               <div className="w-[70%]">
                 <div className="font-title font-bold text-[1.2rem]">Function Hall</div>
+                <p className="text-[0.9rem] text-gray-500">
+                  A place where a special occasion or event can be held. These venues can range from large spacious convention centers to small
+                  intimate banquet halls.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card className="rounded-md py-4 hover:bg-gray-100 cursor-pointer" onClick={() => navigateForm("Independent Provider")}>
+          <CardContent>
+            <div className="flex align-center gap-5">
+              <div className="w-[15%] flex items-center justify-center">
+                <Users size={50} />
+              </div>
+              <div className="w-[70%]">
+                <div className="font-title font-bold text-[1.2rem]">Independent Provider</div>
                 <p className="text-[0.9rem] text-gray-500">
                   A place where a special occasion or event can be held. These venues can range from large spacious convention centers to small
                   intimate banquet halls.

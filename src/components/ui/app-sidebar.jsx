@@ -33,20 +33,17 @@ import {
 } from "@/components/ui/sidebar"
 
 // This is sample data.
-const data = {
-  user: {
-    name: "Alfred Jay V. Ngujo",
-    email: "team@gmail.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "EasyVent",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-  ],
-  navMain: [
+
+
+export function AppSidebar({ onClick, ...props }) {
+  const userData = localStorage.getItem("user-data");
+  const parsedData = JSON.parse(userData ?? "{}");
+
+  const userRole = parsedData?.role ?? "";
+
+  const hasAccessToServices = ["Admin", "Provider"];
+
+  const navLinks = [
     {
       title: "Dashboard",
       url: "",
@@ -57,6 +54,7 @@ const data = {
       title: "Services",
       url: "services",
       icon: NotebookPenIcon,
+      hide: hasAccessToServices.every((role) => role !== userRole),
     },
     {
       title: "Bookings",
@@ -73,10 +71,24 @@ const data = {
       url: "profile",
       icon: User,
     },
-  ],
-}
+  ].filter((item) => !item.hide);
 
-export function AppSidebar({ onClick, ...props }) {
+  const data = {
+    user: {
+      name: "Alfred Jay V. Ngujo",
+      email: "team@gmail.com",
+      avatar: "/avatars/shadcn.jpg",
+    },
+    teams: [
+      {
+        name: "EasyVent",
+        logo: GalleryVerticalEnd,
+        plan: "Enterprise",
+      },
+    ],
+    navMain: navLinks,
+  }
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

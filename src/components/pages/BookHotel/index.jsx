@@ -1,4 +1,4 @@
-import { Calendar, Circle, Heart, MapPin, Star } from "lucide-react";
+import { Calendar, Circle, Heart, LogIn, MapPin, PhilippinePeso, Star, Users } from "lucide-react";
 import FooterSection from "../../custom-ui/Footer";
 import NavigationMenu from "../../custom-ui/NavigationMenu";
 import { Button } from "@/components/ui/button";
@@ -11,20 +11,162 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
 import { Card, CardContent } from "@/components/ui/card";
 import GalleryGrid from "./components/GalleryGrid";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MapLocation from "./components/MapLocation";
 import { getServiceData } from "../../../api/services";
+import { formatCurrencyWithoutSymbol } from "../../../api/util";
+import { toast } from "sonner";
+
+const PackagesSelection = ({ serviceId, packages_list = [] }) => {
+  const navigate = useNavigate();
+  const [selectedPackage, setSelectedPackage] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSelectPackage = (packageItem) => {
+    setSelectedPackage(packageItem);
+  }
+
+  const submitBooking = () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    const formData = new FormData();
+
+    const userData = localStorage.getItem("user-data");
+    const parsedUserData = JSON.parse(userData);
+
+    formData.append("userId", parsedUserData.id);
+    formData.append("serviceId", serviceId);
+    formData.append("packageItem", JSON.stringify(selectedPackage));
+
+    fetch(`${import.meta.env.VITE_API_URL}/booking/create.php`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.error) {
+          toast(json.error.title, {
+            description: json.error.message,
+          });
+
+          return;
+        }
+        if (json.data) {
+          toast(json.data.title, {
+            description: json.data.message,
+          });
+
+          navigate("/dashboard/bookings");
+
+          return;
+        }
+      })
+      .catch((error) => {
+        toast("Something Went wrong!", {
+          description: error.message,
+        });
+      });
+
+    setIsLoading(false);
+  }
+
+  return (
+    <form>
+      <DialogHeader>
+        <DialogTitle>Packages</DialogTitle>
+        <DialogDescription>
+          Select a package
+        </DialogDescription>
+      </DialogHeader>
+
+      <div className="grid grid-cols-1 gap-5 pt-7">
+        {packages_list.map((packageItem) => (
+          <Card
+            key={packageItem.package_name}
+            className={`rounded-md py-4 ${selectedPackage.package_name === packageItem.package_name ? "border-blue-400 border-2" : ""} hover:bg-gray-100 cursor-pointer`}
+            onClick={() => handleSelectPackage(packageItem)}
+          >
+            <CardContent>
+              <div className="py-2 rounded-sm mb-4">
+                <div className="font-semibold mb-1">
+                  {packageItem.package_name}
+                </div>
+                <div className="flex gap-10 mb-5">
+                  <p className="text-[0.9rem] text-gray-500 flex items-center gap-2"><PhilippinePeso size={15} /> {formatCurrencyWithoutSymbol("en-US", "PHP", packageItem.price)}</p>
+                  <p className="text-[0.9rem] text-gray-500 flex items-center gap-2"><Users size={15} /> {packageItem.no_guest} Guests</p>
+                </div>
+
+                <p className="font-semibold mb-1">Inclusions</p>
+                <ul className="mb-5">
+                  {packageItem.inclusions.map((inclusion) => (
+                    <li className="decoration" key={inclusion}>
+                      <div className="flex pl-3 gap-2 items-center">
+                        <Circle size={9} fill="#183B4E" /> {inclusion}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="font-semibold mb-1">Meal Sets</p>
+                <div className="grid grid-cols-2">
+                  {packageItem.meal_sets.map(({ title = "", meals = [] }) => (
+                    <ul key={title}>
+                      <li className="decoration">
+                        <div className="flex pl-3 gap-2 items-center">
+                          <Circle size={9} fill="#183B4E" /> {title}
+                        </div>
+
+                        <ul>
+                          {meals.map((mealItem) => (
+                            <li key={mealItem}>
+                              <div className="flex pl-6 gap-2 items-center">
+                                <Circle size={9} /> {mealItem}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    </ul>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+
+        <Button
+          disabled={isLoading}
+          className="mt-5 w-fit bg-[#27548a] py-2 hover:bg-[#446a99] ml-auto"
+          type="button"
+          onClick={submitBooking}
+        >Submit Booking</Button>
+      </div>
+    </form>
+  )
+}
 
 const BookHotel = () => {
   const navigate = useNavigate();
   const [mapEnabled, setMapEnabled] = useState(false);
   const { state = {} } = useLocation();
   const [serviceState, setServiceState] = useState({});
+  const [userData, setUserData] = useState(null);
+
+  const [enabledPackages, setEnabledPackages] = useState(false);
 
   const {
+    id,
     property_name,
     property_description,
     location = {},
@@ -44,6 +186,22 @@ const BookHotel = () => {
 
     setServiceState(data);
   }
+
+  const openPackages = () => {
+    setEnabledPackages(true);
+  }
+
+  const navigateLogin = () => {
+    navigate("/login", { state: { redirect: { page: "/serviceHotel", state: { id: state.id } }}})
+  };
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user-data");
+
+    if (!userData) return;
+
+    setUserData(JSON.parse(userData));
+  }, [])
 
   useEffect(() => {
     if (!state || !state.id) {
@@ -114,7 +272,7 @@ const BookHotel = () => {
                   <div className="relative mb-5 h-[12rem] shadow-md border-1 rounded-sm overflow-hidden">
                     {geocode && <MapLocation name={property_name} rate={0} geocode={geocode} zoom={13} />}
 
-                    <div onClick={() => setMapEnabled(true)} className="opacity-0 cursor-pointer hover:opacity-100 absolute top-0 left-0 w-full h-full z-[1000] bg-[#000000AA] text-white flex items-center justify-center">
+                    <div onClick={() => setMapEnabled(true)} className="opacity-0 cursor-pointer hover:opacity-100 absolute top-0 left-0 w-full h-full z-[5] bg-[#000000AA] text-white flex items-center justify-center">
                       View Location on Map
                     </div>
                   </div>
@@ -140,7 +298,9 @@ const BookHotel = () => {
                   </Card>
 
                   <div className="flex py-5">
-                    <Button className="bg-[#27548a] w-full py-6">BOOK NOW <Calendar /></Button>
+                    {!userData && <Button className="bg-[#27548a] w-full py-6 hover:bg-[#446a99]" type="button" onClick={navigateLogin}>Sign-In to Book <LogIn /></Button>}
+
+                    {!!userData && <Button className="bg-[#27548a] w-full py-6 hover:bg-[#446a99]" onClick={openPackages}>Book Now <Calendar /></Button>}
                   </div>
 
                 </div>
@@ -203,11 +363,17 @@ const BookHotel = () => {
       <FooterSection />
 
       {mapEnabled && (
-        <div onClick={() => setMapEnabled(false)} className="fixed top-0 left-0 w-[100vw] h-[100vh] px-[10rem] py-10 bg-[#000000AA] backdrop-blur-xs z-[1000]">
+        <div onClick={() => setMapEnabled(false)} className="fixed top-0 left-0 w-[100vw] h-[100vh] px-[10rem] py-10 bg-[#000000AA] backdrop-blur-xs z-[10]">
           <div onClick={(event) => event.stopPropagation()} className="h-full">
             <MapLocation name={property_name} rate={0} geocode={geocode} zoom={13} />
           </div>
         </div>)}
+
+      <Dialog open={!!enabledPackages} onOpenChange={setEnabledPackages}>
+        <DialogContent className="sm:max-w-[700px] max-h-[85vh] overflow-auto">
+          <PackagesSelection serviceId={id} packages_list={packages_list} />
+        </DialogContent>
+      </Dialog>
     </div>
   )
 };

@@ -9,8 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { CalendarPlus, CirclePlus, Ellipsis, Funnel, Plus, Search, SlidersHorizontal, Star } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { formatCurrency } from "../../../../../../../api/util";
 
 import {
