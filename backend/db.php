@@ -1,6 +1,6 @@
 <?php
 
-  $connect = new PDO('mysql:host=localhost;dbname=icei_39894042_easyvent', 'icei_39894042', '');
+  $connect = new PDO('mysql:host=localhost;dbname=platform_ems_schema', 'root', '');
 
   function cors() {
     // Allow from any origin
