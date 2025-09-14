@@ -24,7 +24,16 @@ const Dashboard = () => {
   useEffect(() => {
     const userData = localStorage.getItem("user-data");
 
-    if (!userData) {
+    const parsedUserData = JSON.parse(userData ?? null) || {};
+
+    const { expiration } = parsedUserData;
+
+    const today = new Date();
+
+    const hasExpired = expiration < today.getTime();
+
+    if (!userData || !expiration || hasExpired) {
+      localStorage.removeItem("user-data");
       navigate("/");
 
       return;

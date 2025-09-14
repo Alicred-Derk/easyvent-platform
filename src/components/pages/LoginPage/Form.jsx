@@ -54,16 +54,17 @@ const LoginForm = ({
             contacts: JSON.parse(data.contacts ?? "[]"),
           };
 
-          localStorage.setItem("user-data", JSON.stringify({ ...parsedData }));
+          const todayDate = new Date();
+          todayDate.setDate(todayDate.getDate() + 1);
+
+          const tomorrow = todayDate.getTime();
+
+          localStorage.setItem("user-data", JSON.stringify({ ...parsedData, expiration: tomorrow }));
           const { personal_name, last_name } = data;
 
           if (!personal_name && !last_name) {
-            const todayDate = new Date();
-            todayDate.setDate(todayDate.getDate() + 1);
 
-            const tomorrow = todayDate.getTime();
-
-            navigate("/signup/profile", { state: { id: data.id, email: data.email, expiration: tomorrow, redirect: state?.redirect } });
+            navigate("/signup/profile", { state: { id: data.id, email: data.email, redirect: state?.redirect } });
             return;
           }
 
