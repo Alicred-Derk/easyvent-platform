@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Ellipsis } from "lucide-react";
-import { formatCurrency } from "../../../../../../../api/util";
+import { formatCurrency, formatDate } from "../../../../../../../api/util";
 
 import {
   Command,
@@ -50,7 +50,7 @@ const BookingTable = ({ bookingList = [] }) => {
                 </TableCell>
                 <TableCell>{service.package_item?.package_name}</TableCell>
                 <TableCell>{formatCurrency(service.package_item?.price)}</TableCell>
-                <TableCell>YYYY/MM/DD HH:MM</TableCell>
+                <TableCell>{formatDate(service.created_at)}</TableCell>
                 <TableCell className="px-5 py-2">
                   <div className="flex items-center justify-between">
                     <span>{service.status}</span>

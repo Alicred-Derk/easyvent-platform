@@ -63,7 +63,7 @@ const Routes = () => {
       element: <ProfileSetup />,
     },
     {
-      path: "/servicebook",
+      path: "/independentservice",
       element: <BookService />
     },
     {

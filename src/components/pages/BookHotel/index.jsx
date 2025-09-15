@@ -211,7 +211,7 @@ const BookHotel = () => {
     }
 
     initiateServiceData(state.id);
-  }, [state])
+  }, [state]);
 
   return (
     <div className="w-[100vw] h-[100vh] overflow-y-auto overflow-x-hidden relative">

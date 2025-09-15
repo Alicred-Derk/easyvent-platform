@@ -9,17 +9,19 @@ import { useMemo, useState } from "react";
 const Events = ({ services = [] }) => {
   const [selectedTab, setSelectedTab] = useState("");
 
-  const { hotels = [], restaurants = [], functionHalls = [] } = useMemo(() => {
+  const { hotels = [], restaurants = [], functionHalls = [], indProviders = [] } = useMemo(() => {
     const hotelServc = [];
     const restServc = [];
     const funcServc = [];
+    const indProviderServc = [];
 
     services.forEach((service) => {
-      const { location, property_name, images_url, category, id } = service;
+      const { location, property_name, images_url, category, id, independent_locations = [] } = service;
 
       const { province, city, barangay, street, zip_code } = location;
       const serviceObj = {
         id,
+        category,
         name: property_name,
         location: `${[street, barangay, city, province].filter(Boolean).join(", ")} ${zip_code}`,
         image: `${import.meta.env.VITE_API_URL}/uploads/${images_url[0]}`
@@ -36,9 +38,23 @@ const Events = ({ services = [] }) => {
       if (category === "Function Hall") {
         funcServc.push(serviceObj);
       }
+
+      if (category === "Independent Provider") {
+        const [firstLocation = {}] = independent_locations;
+
+        indProviderServc.push({
+          ...serviceObj,
+          location: `${[
+            firstLocation.street,
+            firstLocation.barangay,
+            firstLocation.city,
+            firstLocation.province
+          ].filter(Boolean).join(", ")} ${firstLocation.zip_code}`,
+        });
+      }
     })
 
-    return { hotels: hotelServc, restaurants: restServc, functionHalls: funcServc };
+    return { hotels: hotelServc, restaurants: restServc, functionHalls: funcServc, indProviders: indProviderServc };
   }, [services])
   return (
     <div className="px-[1rem] md:px-[10rem]">
@@ -68,6 +84,13 @@ const Events = ({ services = [] }) => {
           <>
             <p className="font-title font-bold text-[1.3rem] pb-4 pt-5 px-3">Function Halls</p>
             <Slider list={functionHalls} />
+          </>
+        )}
+
+        {(!selectedTab || selectedTab === "serviceProviders") && (
+          <>
+            <p className="font-title font-bold text-[1.3rem] pb-4 pt-5 px-3">Independent Providers</p>
+            <Slider list={indProviders} />
           </>
         )}
       </div>

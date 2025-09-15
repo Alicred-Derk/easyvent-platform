@@ -50,6 +50,7 @@ const getServiceData = async (id) => {
     skills: JSON.parse(service.skills ?? "[]"),
     experiences: JSON.parse(service.experiences ?? "[]"),
     independent_locations: JSON.parse(service.independent_locations ?? "[]"),
+    contacts: JSON.parse(service.contacts ?? "[]"),
   }
 
   return parsedService;
