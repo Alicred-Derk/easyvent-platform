@@ -253,6 +253,19 @@ const Bookings = ({ service = {} }) => {
     const formData = new FormData();
 
     formData.append("id", selected.id);
+    const userData = localStorage.getItem("user-data");
+    const parsedUser = JSON.parse(userData);
+
+    const { property_name } = service;
+    const { id_customer, personal_name, last_name, display_picture } = selected;
+
+    formData.append("user1Id", parsedUser.id);
+    formData.append("user1Name", property_name);
+    formData.append("user1Image", parsedUser.display_picture);
+
+    formData.append("user2Id", id_customer);
+    formData.append("user2Name", [personal_name, last_name].filter(Boolean).join(" "));
+    formData.append("user2Image", display_picture);
 
     fetch(`${import.meta.env.VITE_API_URL}/booking/confirmBooking.php`, {
       method: "POST",
