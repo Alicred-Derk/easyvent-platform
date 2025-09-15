@@ -76,7 +76,7 @@ const Details = ({ property_description = "", highlights = [], amenities = [], p
               </div>
               <div className="flex gap-10 mb-5">
                 <p className="text-[0.9rem] text-gray-500 flex items-center gap-2"><PhilippinePeso size={15} /> {formatCurrencyWithoutSymbol("en-US", "PHP", packageItem.price)}</p>
-                {packageItem.guest_no && (
+                {packageItem.no_guest && (
                   <p className="text-[0.9rem] text-gray-500 flex items-center gap-2"><Users size={15} /> {packageItem.no_guest} Guests</p>
                 )}
 

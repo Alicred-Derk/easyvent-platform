@@ -154,6 +154,7 @@ const Bookings = () => {
         const parsedBookings = bookings.map((item) => ({
           ...item,
           package_item: JSON.parse(item.package_item ?? "{}"),
+          contacts: JSON.parse(item.contacts ?? "[]"),
         }));
 
         setBookingList(parsedBookings);
