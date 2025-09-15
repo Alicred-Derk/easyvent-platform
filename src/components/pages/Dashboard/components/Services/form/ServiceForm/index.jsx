@@ -8,13 +8,26 @@ import AmenitiesForm from "./components/AmenitiesForm";
 
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import IndependentForm from "./components/IndependentForm";
 
 const ServiceForm = () => {
   const navigate = useNavigate();
   const [formState, setFormState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { state = {} } = useLocation();
-  const { id, status, category, property_details = {}, images_url = [], highlights = [], location = {}, amenities = [], packages_list = [] } = formState;
+  const {
+    id,
+    status,
+    category,
+    property_details = {},
+    images_url = [],
+    highlights = [],
+    location = {},
+    amenities = [],
+    packages_list = [],
+    independent_locations = [],
+    independent_packages = [],
+  } = formState;
 
   useEffect(() => {
     if (!state) return;
@@ -22,6 +35,8 @@ const ServiceForm = () => {
     const newState = {
       ...state,
       property_details: {
+        skills: state.skills,
+        experiences: state.experiences,
         property_name: state.property_name,
         property_description: state.property_description,
       }
@@ -37,7 +52,7 @@ const ServiceForm = () => {
 
   const setupFormData = async (status) => {
     const formData = new FormData();
-    const { property_name = "", property_description = "" } = property_details;
+    const { property_name = "", property_description = "", skills = [], experiences = [] } = property_details;
     const files = []
     const urls = [];
 
@@ -79,6 +94,11 @@ const ServiceForm = () => {
     formData.append("amenities", JSON.stringify(amenities ?? []));
     formData.append("location", JSON.stringify(location ?? {}));
     formData.append("packages_list", JSON.stringify(packages_list));
+
+    
+    formData.append("skills", JSON.stringify(skills ?? []));
+    formData.append("experiences", JSON.stringify(experiences ?? []));
+    formData.append("independent_locations", JSON.stringify(independent_locations ?? []));
 
     return formData;
   }
@@ -164,22 +184,28 @@ const ServiceForm = () => {
         </div>
       </div>
 
-      <div className="flex gap-5 py-3">
-        <div className="w-[60%] flex flex-col gap-5">
-          <PropertyForm defaultValues={property_details} updateFormState={updateFormState} />
+      {category !== "Independent Provider" && (
+        <div className="flex gap-5 py-3">
+          <div className="w-[60%] flex flex-col gap-5">
+            <PropertyForm defaultValues={property_details} updateFormState={updateFormState} />
 
-          <PropertyImages defaultValues={images_url} updateFormState={updateFormState} />
+            <PropertyImages defaultValues={images_url} updateFormState={updateFormState} />
 
-          <HighlightsForm defaultValues={highlights} updateFormState={updateFormState} />
+            <HighlightsForm defaultValues={highlights} updateFormState={updateFormState} />
+          </div>
+          <div className="w-[40%] flex flex-col gap-5">
+            <LocationForm defaultValues={location} updateFormState={updateFormState} />
+
+            <AmenitiesForm defaultValues={amenities} updateFormState={updateFormState} />
+
+            <Packages defaultValues={packages_list} updateFormState={updateFormState} />
+          </div>
         </div>
-        <div className="w-[40%] flex flex-col gap-5">
-          <LocationForm defaultValues={location} updateFormState={updateFormState} />
+      )}
 
-          <AmenitiesForm defaultValues={amenities} updateFormState={updateFormState} />
-
-          <Packages defaultValues={packages_list} updateFormState={updateFormState} />
-        </div>
-      </div>
+      {category === "Independent Provider" && (
+        <IndependentForm formState={formState} updateFormState={updateFormState} />
+      )}
     </div>
   )
 };

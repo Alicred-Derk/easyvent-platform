@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-const PropertyImages = ({ defaultValues = [], updateFormState }) => {
+const PropertyImages = ({ defaultValues = [], updateFormState, title = "Property" }) => {
   const inputRef = useRef();
 
   const [files, setFiles] = useState(defaultValues);
@@ -78,7 +78,7 @@ const PropertyImages = ({ defaultValues = [], updateFormState }) => {
   return (
     <Card>
       <CardContent>
-        <p className="font-semibold mb-5 text-[1.15rem]">Property Images</p>
+        <p className="font-semibold mb-5 text-[1.15rem]">{title} Images</p>
         
         <Input onChange={handleUpload} ref={inputRef} multiple accept=".png, .jpg, .jpeg" type="file" className="hidden" id="property_images" />
         

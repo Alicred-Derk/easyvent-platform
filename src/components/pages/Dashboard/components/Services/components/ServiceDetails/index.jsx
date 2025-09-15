@@ -31,6 +31,8 @@ const ServiceDetails = () => {
 
   const [selectedImageIndx, setSelectedImageIndx] = useState(0);
 
+  console.log("Serivce State", serviceState);
+
   const {
     property_name,
     property_description,

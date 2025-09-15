@@ -14,6 +14,9 @@ const getPublishedServices = async () => {
     images_url: JSON.parse(service.images_url ?? "[]"),
     packages_list: JSON.parse(service.packages_list ?? "[]"),
     location: JSON.parse(service.location ?? "{}"),
+    skills: JSON.parse(service.skills ?? "[]"),
+    experiences: JSON.parse(service.experiences ?? "[]"),
+    independent_locations: JSON.parse(service.independent_locations ?? "[]"),
   }));
 
   return parsedServices ?? [];
@@ -44,6 +47,9 @@ const getServiceData = async (id) => {
     images_url: JSON.parse(service.images_url ?? "[]"),
     packages_list: JSON.parse(service.packages_list ?? "[]"),
     location: JSON.parse(service.location ?? "{}"),
+    skills: JSON.parse(service.skills ?? "[]"),
+    experiences: JSON.parse(service.experiences ?? "[]"),
+    independent_locations: JSON.parse(service.independent_locations ?? "[]"),
   }
 
   return parsedService;

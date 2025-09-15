@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Circle, PhilippinePeso, Users } from "lucide-react";
+import { Circle, PhilippinePeso, Timer, Users } from "lucide-react";
 import { formatCurrencyWithoutSymbol } from "../../../../../../../../api/util";
 
 const Details = ({ property_description = "", highlights = [], amenities = [], packages_list = [] }) => {
@@ -76,7 +76,13 @@ const Details = ({ property_description = "", highlights = [], amenities = [], p
               </div>
               <div className="flex gap-10 mb-5">
                 <p className="text-[0.9rem] text-gray-500 flex items-center gap-2"><PhilippinePeso size={15} /> {formatCurrencyWithoutSymbol("en-US", "PHP", packageItem.price)}</p>
-                <p className="text-[0.9rem] text-gray-500 flex items-center gap-2"><Users size={15} /> {packageItem.no_guest} Guests</p>
+                {packageItem.guest_no && (
+                  <p className="text-[0.9rem] text-gray-500 flex items-center gap-2"><Users size={15} /> {packageItem.no_guest} Guests</p>
+                )}
+
+                {packageItem.duration && (
+                  <p className="text-[0.9rem] text-gray-500 flex items-center gap-2"><Timer size={15} /> {packageItem.duration} hour(s)</p>
+                )}
               </div>
 
               <p className="font-semibold mb-1">Inclusions</p>
@@ -90,28 +96,32 @@ const Details = ({ property_description = "", highlights = [], amenities = [], p
                 ))}
               </ul>
 
-              <p className="font-semibold mb-1">Meal Sets</p>
-              <div className="grid grid-cols-2">
-                {packageItem.meal_sets.map(({ title = "", meals = [] }) => (
-                  <ul key={title}>
-                    <li className="decoration">
-                      <div className="flex pl-3 gap-2 items-center">
-                        <Circle size={9} fill="#183B4E" /> {title}
-                      </div>
+              {packageItem.meal_sets && (
+                <>
+                  <p className="font-semibold mb-1">Meal Sets</p>
+                  <div className="grid grid-cols-2">
+                    {packageItem.meal_sets.map(({ title = "", meals = [] }) => (
+                      <ul key={title}>
+                        <li className="decoration">
+                          <div className="flex pl-3 gap-2 items-center">
+                            <Circle size={9} fill="#183B4E" /> {title}
+                          </div>
 
-                      <ul>
-                        {meals.map((mealItem) => (
-                          <li key={mealItem}>
-                            <div className="flex pl-6 gap-2 items-center">
-                              <Circle size={9} /> {mealItem}
-                            </div>
-                          </li>
-                        ))}
+                          <ul>
+                            {meals.map((mealItem) => (
+                              <li key={mealItem}>
+                                <div className="flex pl-6 gap-2 items-center">
+                                  <Circle size={9} /> {mealItem}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
                       </ul>
-                    </li>
-                  </ul>
-                ))}
-              </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>
