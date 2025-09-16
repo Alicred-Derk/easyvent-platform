@@ -12,11 +12,15 @@
   $amenities = addslashes($_POST["amenities"]);
   $location = addslashes($_POST["location"]);
   $packages_list = addslashes($_POST["packages_list"]);
+  
+  $skills = addslashes($_POST["skills"]);
+  $experiences = addslashes($_POST["experiences"]);
+  $independent_locations = addslashes($_POST["independent_locations"]);
 
   $mutate = "
     INSERT INTO `services_tbl`
-    (`category`, `property_name`, `property_description`, `images_url`, `highlights`, `amenities`, `location`, `packages_list`, `status`)
-    VALUES ('$category','$property_name','$property_description','$images_url','$highlights','$amenities','$location','$packages_list','$status')
+    (`category`, `property_name`, `property_description`, `images_url`, `highlights`, `amenities`, `location`, `packages_list`, `status`, `skills`, `experiences`, `independent_locations`)
+    VALUES ('$category','$property_name','$property_description','$images_url','$highlights','$amenities','$location','$packages_list','$status','$skills', '$experiences', '$independent_locations')
   ";
 
   $statement = $connect->prepare($mutate);

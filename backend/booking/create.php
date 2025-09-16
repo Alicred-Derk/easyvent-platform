@@ -4,7 +4,7 @@
 
   $userId = $_POST["userId"];
   $serviceId = $_POST["serviceId"];
-  $packageItem = $_POST["packageItem"];
+  $packageItem = addslashes($_POST["packageItem"]);
 
   $response = new stdClass();
 

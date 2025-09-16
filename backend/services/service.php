@@ -7,9 +7,9 @@
   $id = $_POST["id"];
   
   $query = "
-    SELECT servc.*
-    FROM services_tbl servc
-    WHERE servc.id = $id
+    SELECT servc.*, usert.contacts, usert.email
+    FROM services_tbl servc, user_providers_tbl userp, users_tbl usert
+    WHERE servc.id = $id AND userp.id_user = usert.id AND userp.id_service = servc.id
   ";
 
   $statement = $connect->prepare($query);

@@ -11,6 +11,10 @@
   $amenities = addslashes($_POST["amenities"]);
   $location = addslashes($_POST["location"]);
   $packages_list = addslashes($_POST["packages_list"]);
+  
+  $skills = addslashes($_POST["skills"]);
+  $experiences = addslashes($_POST["experiences"]);
+  $independent_locations = addslashes($_POST["independent_locations"]);
 
   $mutate = "
     UPDATE `services_tbl`
@@ -22,7 +26,10 @@
         `amenities`='$amenities',
         `location`='$location',
         `packages_list`='$packages_list',
-        `status`='$status'
+        `status`='$status',
+        `skills`='$skills',
+        `experiences`='$experiences',
+        `independent_locations`='$independent_locations'
     WHERE id = $id
   ";
 
