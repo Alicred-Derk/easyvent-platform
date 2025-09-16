@@ -41,7 +41,12 @@ const ProfileSetup = () => {
         }
 
         if (data) {
-          localStorage.setItem("user-data", JSON.stringify({ ...formValues, display: data.display_picture ?? ""}));
+          const todayDate = new Date();
+          todayDate.setDate(todayDate.getDate() + 1);
+
+          const tomorrow = todayDate.getTime();
+
+          localStorage.setItem("user-data", JSON.stringify({ ...formValues, display: data.display_picture ?? "", expiration: tomorrow }));
 
           if (state && state.redirect) {
             navigate(state.redirect.page, { state: state.redirect.state });
