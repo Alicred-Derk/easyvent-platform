@@ -41,6 +41,7 @@ const ChatBox = ({ selectedChat }) => {
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [shouldScroll, setShouldScroll] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const boxRef = useRef();
 
   const formRef = useRef();
@@ -74,6 +75,8 @@ const ChatBox = ({ selectedChat }) => {
   }
 
   const initiateMessages = (id) => {
+    if (isFetching) return;
+    setIsFetching(true);
     const userData = localStorage.getItem("user-data");
     const parsedUser = JSON.parse(userData);
     const formData = new FormData();
@@ -103,7 +106,7 @@ const ChatBox = ({ selectedChat }) => {
           return MappedMSG;
         });
 
-
+        setIsFetching(false);
       });
   }
 

@@ -42,8 +42,11 @@ const ChatList = ({ chatList = [], handleSelect }) => {
 
 const ChatMenu = ({ handleSelect }) => {
   const [chatList, setChatList] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
   const initiateChats = () => {
+    if (isFetching) return;
+    setIsFetching(true);
     const userData = localStorage.getItem("user-data");
     const parsedUser = JSON.parse(userData);
 
@@ -69,6 +72,7 @@ const ChatMenu = ({ handleSelect }) => {
         });
 
         setChatList(mappedData);
+        setIsFetching(false);
 
       });
   };
